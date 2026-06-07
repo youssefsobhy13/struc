@@ -22,6 +22,21 @@
   --radius:10px;
   --shadow:0 4px 24px rgba(0,0,0,.5);
 }
+body.light-mode{
+  --bg:#f0f4f8;
+  --surface:#ffffff;
+  --surface2:#e8edf4;
+  --border:#cdd5e0;
+  --accent:#0077aa;
+  --accent2:#cc0033;
+  --accent3:#6633cc;
+  --gold:#996600;
+  --text:#1a1f2e;
+  --text2:#5a6a80;
+  --correct:#007744;
+  --wrong:#cc0000;
+  --shadow:0 4px 24px rgba(0,0,0,.12);
+}
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden;}
@@ -267,6 +282,121 @@ body{padding-top:60px;}
   transition:all .2s;font-family:'IBM Plex Mono',monospace;
 }
 .print-btn:hover{border-color:var(--gold);color:var(--gold);}
+.download-btn{
+  padding:7px 18px;background:linear-gradient(135deg,rgba(0,229,255,.12),rgba(167,139,250,.12));
+  border:1px solid var(--accent);border-radius:6px;color:var(--accent);
+  font-size:.82rem;cursor:pointer;transition:all .2s;font-family:'IBM Plex Mono',monospace;
+  font-weight:600;display:flex;align-items:center;gap:6px;
+}
+.download-btn:hover{background:var(--accent);color:#000;border-color:var(--accent);}
+.download-btn svg{flex-shrink:0;}
+
+/* PRINT BUTTON */
+.print-action-btn{
+  padding:7px 18px;background:var(--surface2);border:1px solid var(--border);
+  border-radius:6px;color:var(--text2);font-size:.82rem;cursor:pointer;
+  transition:all .2s;font-family:'IBM Plex Mono',monospace;
+  display:flex;align-items:center;gap:6px;
+}
+.print-action-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* ACTION GROUP - download + print together */
+.action-group{display:flex;gap:6px;align-items:center;}
+
+/* THEME TOGGLE */
+.theme-toggle-btn{
+  width:34px;height:34px;border-radius:8px;border:1px solid var(--border);
+  background:var(--surface);cursor:pointer;display:flex;align-items:center;
+  justify-content:center;color:var(--text2);transition:all .2s;flex-shrink:0;
+}
+.theme-toggle-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* SHUFFLE BUTTON */
+.shuffle-btn{
+  padding:7px 14px;background:var(--surface2);border:1px solid var(--border);
+  border-radius:6px;color:var(--text2);font-size:.82rem;cursor:pointer;
+  transition:all .2s;font-family:'IBM Plex Mono',monospace;
+  display:flex;align-items:center;gap:5px;
+}
+.shuffle-btn:hover{border-color:var(--accent3);color:var(--accent3);}
+
+/* BOOKMARK BUTTON on questions */
+.bookmark-btn{
+  position:absolute;top:12px;right:12px;
+  width:28px;height:28px;background:none;border:1px solid var(--border);
+  border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  color:var(--text2);transition:all .2s;
+}
+.bookmark-btn:hover{border-color:var(--gold);color:var(--gold);}
+.bookmark-btn.bookmarked{background:rgba(251,191,36,.12);border-color:var(--gold);color:var(--gold);}
+
+/* QUIZ TIMER */
+.quiz-timer{
+  display:none;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;
+  font-size:.82rem;color:var(--accent);background:rgba(0,229,255,.06);
+  border:1px solid rgba(0,229,255,.2);padding:5px 14px;border-radius:6px;
+}
+.quiz-timer.visible{display:flex;}
+.quiz-timer.danger{color:var(--accent2);border-color:rgba(255,61,107,.3);background:rgba(255,61,107,.06);}
+.timer-icon{animation:timerTick 1s infinite;}
+@keyframes timerTick{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+/* STATS MINI CARDS in hero */
+.stats-row{
+  display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;
+  animation:fadeUp .6s .5s ease both;
+}
+.stat-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:10px 18px;text-align:center;min-width:70px;
+  transition:border-color .2s;
+}
+.stat-card:hover{border-color:var(--accent);}
+.stat-num{font-family:'Space Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--accent);line-height:1;}
+.stat-lbl{font-size:.68rem;color:var(--text2);margin-top:4px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em;}
+
+/* KEYBOARD SHORTCUTS HINT */
+.kbd-hint{
+  display:inline-flex;align-items:center;gap:4px;
+  font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--text2);
+  margin-left:auto;
+}
+.kbd{
+  background:var(--surface2);border:1px solid var(--border);border-radius:4px;
+  padding:2px 6px;font-size:.68rem;color:var(--text2);
+}
+
+/* PROGRESS BAR PER SECTION */
+.section-progress{
+  width:100%;height:4px;background:var(--surface2);border-radius:2px;
+  margin-bottom:20px;overflow:hidden;
+}
+.section-progress-fill{
+  height:100%;background:linear-gradient(90deg,var(--accent),var(--accent3));
+  border-radius:2px;transition:width .5s ease;width:0%;
+}
+
+/* BOOKMARK FILTER BUTTON */
+.bookmarks-filter-btn{
+  padding:7px 14px;background:var(--surface2);border:1px solid var(--border);
+  border-radius:6px;color:var(--text2);font-size:.82rem;cursor:pointer;
+  transition:all .2s;font-family:'IBM Plex Mono',monospace;
+  display:flex;align-items:center;gap:5px;
+}
+.bookmarks-filter-btn:hover,.bookmarks-filter-btn.active{border-color:var(--gold);color:var(--gold);}
+
+/* NAV LINK SVG alignment */
+.nav-links-list a{display:flex;align-items:center;gap:5px;}
+
+/* TOAST NOTIFICATION */
+.toast{
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:10px 20px;font-family:'IBM Plex Mono',monospace;font-size:.82rem;
+  color:var(--text);z-index:999;opacity:0;transition:all .3s;pointer-events:none;
+  box-shadow:var(--shadow);white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
 /* EXAM SECTION */
 .exam-section{display:none;padding:0 28px 60px;}
@@ -418,7 +548,40 @@ body{padding-top:60px;}
   font-family:'IBM Plex Mono',monospace;font-size:.9rem;
 }
 
-/* ===== PRINT STYLES ===== */
+/* ── MOBILE RESPONSIVE ── */
+@media(max-width:768px){
+  .global-nav{padding:0 14px;}
+  .nav-links-list{display:none;}
+  .nav-search-wrap input{width:130px;}
+  .profile-hero{padding:80px 20px 32px;gap:24px;flex-direction:column-reverse;align-items:flex-start;}
+  .ph-name{font-size:clamp(1.8rem,7vw,2.6rem);}
+  .ph-ring{width:120px;height:120px;}
+  .profile-hero-right{flex-direction:row;width:100%;}
+  .ph-card{width:auto;flex:1;}
+  .hero{padding:36px 16px 24px;}
+  .main-btns{padding:0 14px 32px;gap:10px;}
+  .main-exam-btn{padding:13px 18px;font-size:.9rem;flex:1;min-width:140px;}
+  .inner-actions{padding:0 14px 16px;gap:8px;}
+  .mode-toggle{flex-wrap:wrap;}
+  .mode-opt{padding:6px 12px;font-size:.76rem;}
+  .search-container{min-width:100%;}
+  .exam-section{padding:0 14px 48px;}
+  .section-header{padding:0 0 16px;}
+  .question{padding:14px 14px;}
+  .q-text{font-size:.88rem;}
+  .option{font-size:.85rem;padding:9px 12px;}
+  .tf-btn{padding:7px 18px;font-size:.85rem;}
+  .score-bar{padding:8px 14px;flex-wrap:wrap;gap:6px;}
+  .score-progress{width:80px;}
+  .social-links{padding:0 14px 32px;}
+  #global-search-results{right:8px;width:calc(100vw - 16px);}
+}
+@media(max-width:480px){
+  .main-exam-btn{font-size:.82rem;padding:11px 12px;}
+  .ph-ring{width:90px;height:90px;}
+  .ph-fallback{font-size:2rem;}
+}
+
 @media print{
   :root{--bg:#fff;--surface:#fff;--surface2:#f9f9f9;--border:#ddd;--text:#111;--text2:#444;--accent:#0077aa;--accent2:#cc0033;--accent3:#6633aa;--correct:#007744;--wrong:#cc0000;--gold:#996600;}
   body{background:#fff;color:#111;font-family:'IBM Plex Mono',monospace;font-size:8.5pt;}
@@ -483,18 +646,39 @@ body{padding-top:60px;}
 
 <!-- NAVBAR -->
 <nav class="global-nav">
-  <a href="#" class="nav-logo-text">⚡ CSC<span>124</span></a>
+  <a href="#" class="nav-logo-text">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+    CSC<span>124</span>
+  </a>
   <ul class="nav-links-list">
-    <li><a href="#" onclick="event.preventDefault()">Home</a></li>
-    <li><a href="#" onclick="event.preventDefault();showSection('sheets')">Sheets</a></li>
-    <li><a href="#" onclick="event.preventDefault();showSection('sections')">Sections</a></li>
-    <li><a href="#" onclick="event.preventDefault();showSection('lectures')">Lectures</a></li>
+    <li><a href="#" onclick="event.preventDefault();scrollToTop()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home
+    </a></li>
+    <li><a href="#" onclick="event.preventDefault();showSection('sheets')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      Sheets
+    </a></li>
+    <li><a href="#" onclick="event.preventDefault();showSection('sections')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+      Sections
+    </a></li>
+    <li><a href="#" onclick="event.preventDefault();showSection('lectures')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      Lectures
+    </a></li>
   </ul>
-  <div class="nav-search-wrap">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-    </svg>
-    <input type="text" id="global-search-input" placeholder="Search all questions…" autocomplete="off"/>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <div class="nav-search-wrap">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" id="global-search-input" placeholder="Search all questions…" autocomplete="off"/>
+    </div>
+    <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle theme" id="theme-btn">
+      <svg id="theme-icon-dark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg id="theme-icon-light" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
   </div>
 </nav>
 
@@ -506,9 +690,24 @@ body{padding-top:60px;}
     <p class="ph-uni">Faculty of Computers &amp; Artificial Intelligence · <strong>Sphinx University</strong></p>
     <p class="ph-course">CSC124 — Structured Programming</p>
     <div class="ph-contacts">
-      <span class="ph-chip">📞 01066781530</span>
-      <span class="ph-chip">▶️ YOUSSEFSOBHY1</span>
-      <span class="ph-chip">📨 @YOU1_SSEF</span>
+      <span class="ph-chip">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        01066781530
+      </span>
+      <span class="ph-chip">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        YOUSSEFSOBHY1
+      </span>
+      <span class="ph-chip">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        @YOU1_SSEF
+      </span>
+    </div>
+    <div class="stats-row" id="hero-stats">
+      <div class="stat-card"><div class="stat-num" id="stat-total">0</div><div class="stat-lbl">Questions</div></div>
+      <div class="stat-card"><div class="stat-num" id="stat-answered">0</div><div class="stat-lbl">Answered</div></div>
+      <div class="stat-card"><div class="stat-num" id="stat-correct">0</div><div class="stat-lbl">Correct</div></div>
+      <div class="stat-card"><div class="stat-num" id="stat-bookmarks">0</div><div class="stat-lbl">Bookmarks</div></div>
     </div>
   </div>
   <div class="profile-hero-right">
@@ -548,16 +747,34 @@ body{padding-top:60px;}
 
 <!-- MAIN BUTTONS -->
 <div class="main-btns">
-  <button class="main-exam-btn btn-sheets" onclick="showSection('sheets')">📄 SHEETS QUESTIONS<br/><span style="font-size:.75rem;font-weight:400;font-family:'IBM Plex Mono',monospace;">أسئلة الشيتات</span></button>
-  <button class="main-exam-btn btn-sections" onclick="showSection('sections')">📚 SECTIONS QUESTIONS<br/><span style="font-size:.75rem;font-weight:400;font-family:'IBM Plex Mono',monospace;">أسئلة السكاشن</span></button>
-  <button class="main-exam-btn btn-lectures" onclick="showSection('lectures')">🎓 LECTURES QUESTIONS<br/><span style="font-size:.75rem;font-weight:400;font-family:'IBM Plex Mono',monospace;">أسئلة المحاضرات</span></button>
+  <button class="main-exam-btn btn-sheets" onclick="showSection('sheets')">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:4px"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    <br/>SHEETS QUESTIONS<br/><span style="font-size:.75rem;font-weight:400;font-family:'IBM Plex Mono',monospace;">أسئلة الشيتات</span>
+  </button>
+  <button class="main-exam-btn btn-sections" onclick="showSection('sections')">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:4px"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+    <br/>SECTIONS QUESTIONS<br/><span style="font-size:.75rem;font-weight:400;font-family:'IBM Plex Mono',monospace;">أسئلة السكاشن</span>
+  </button>
+  <button class="main-exam-btn btn-lectures" onclick="showSection('lectures')">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:4px"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+    <br/>LECTURES QUESTIONS<br/><span style="font-size:.75rem;font-weight:400;font-family:'IBM Plex Mono',monospace;">أسئلة المحاضرات</span>
+  </button>
 </div>
 
 <!-- SOCIAL LINKS -->
 <div class="social-links">
-  <span class="social-chip"><span class="icon">📞</span> 01066781530</span>
-  <span class="social-chip"><span class="icon">▶️</span> YOUSSEFSOBHY1</span>
-  <span class="social-chip"><span class="icon">📨</span> @YOU1_SSEF</span>
+  <span class="social-chip">
+    <span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></span>
+    01066781530
+  </span>
+  <span class="social-chip">
+    <span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></span>
+    YOUSSEFSOBHY1
+  </span>
+  <span class="social-chip">
+    <span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span>
+    @YOU1_SSEF
+  </span>
 </div>
 
 <!-- ============================================================ -->
@@ -574,19 +791,57 @@ body{padding-top:60px;}
   </div>
 
   <div class="section-header">
-    <h2 style="color:var(--accent)">📄 Sheets Questions</h2>
+    <h2 style="color:var(--accent)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Sheets Questions
+    </h2>
     <span class="badge" id="sheets-count">Loading…</span>
   </div>
 
+  <div class="section-progress"><div class="section-progress-fill" id="sheets-progress-fill"></div></div>
+
   <div class="inner-actions">
     <div class="mode-toggle">
-      <button class="mode-opt active" onclick="setMode('sheets','study',this)">📖 Study Mode</button>
-      <button class="mode-opt" onclick="setMode('sheets','quiz',this)">⚡ Quiz Mode</button>
-      <button class="mode-opt" onclick="setMode('sheets','reveal',this)">👁 Show All Answers</button>
+      <button class="mode-opt active" onclick="setMode('sheets','study',this)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        Study
+      </button>
+      <button class="mode-opt" onclick="setMode('sheets','quiz',this)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Quiz
+      </button>
+      <button class="mode-opt" onclick="setMode('sheets','reveal',this)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Reveal All
+      </button>
     </div>
     <div class="search-container"><input type="text" placeholder="Search questions…" oninput="filterQuestions('sheets',this.value)"/></div>
-    <button class="print-btn" onclick="window.print()">🖨 Print / PDF</button>
-  </div>
+    <button class="shuffle-btn" onclick="shuffleQuestions('sheets')" title="Shuffle Questions">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+      Shuffle
+    </button>
+    <button class="bookmarks-filter-btn" id="sheets-bm-filter" onclick="toggleBookmarkFilter('sheets')" title="Show bookmarked only">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+      Saved
+    </button>
+    <div class="quiz-timer" id="sheets-timer">
+      <svg class="timer-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span id="sheets-timer-val">0:00</span>
+    </div>
+    <div class="action-group">
+      <button class="download-btn" onclick="downloadPage()">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download
+      </button>
+      <button class="print-action-btn" onclick="window.print()" title="Print (Ctrl+P)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print
+      </button>
+    </div>
+    <span class="kbd-hint" title="Keyboard shortcuts: S=Shuffle, B=Bookmarks, R=Reset">
+      <span class="kbd">S</span> shuffle &nbsp;<span class="kbd">B</span> bookmarks &nbsp;<span class="kbd">R</span> reset
+    </span>
+  </div><!-- end inner-actions -->
 
   <div id="sheets-questions">
 
@@ -1288,6 +1543,187 @@ int main() {
       </div>
     </div>
 
+
+    <!-- ── SHEET 7: Selection & Loops ── -->
+    <div class="category-label">📋 Sheet 7 — Selection &amp; Loops: True / False</div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q101</span><span class="q-type-badge badge-tf">True/False</span><span class="q-text">The <code>if</code> statement is a selection statement.</span></div><div class="tf-options"><button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button><button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — The <code>if</code> statement selects which block of code to execute based on a condition.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q102</span><span class="q-type-badge badge-tf">True/False</span><span class="q-text">The condition in an <code>if</code> statement must be enclosed in parentheses.</span></div><div class="tf-options"><button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button><button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — In C++, the condition of an <code>if</code> statement must always be inside parentheses: <code>if (condition)</code></div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q103</span><span class="q-type-badge badge-tf">True/False</span><span class="q-text"><code>switch</code> can be used with relational expressions directly.</span></div><div class="tf-options"><button class="tf-btn" onclick="answerTF(this,'True','False','sheets')">True</button><button class="tf-btn" onclick="answerTF(this,'False','False','sheets')">False</button></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>False — The <code>switch</code> statement works with integer or char expressions, not relational expressions like <code>x &gt; 5</code>.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q104</span><span class="q-type-badge badge-tf">True/False</span><span class="q-text">The <code>default</code> case in a switch statement is optional.</span></div><div class="tf-options"><button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button><button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — The <code>default</code> case is optional; if no case matches and there is no default, the switch block does nothing.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q105</span><span class="q-type-badge badge-tf">True/False</span><span class="q-text">An <code>else</code> clause executes only when the <code>if</code> condition is false.</span></div><div class="tf-options"><button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button><button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — The <code>else</code> block runs only when the associated <code>if</code> condition evaluates to false.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q106</span><span class="q-type-badge badge-tf">True/False</span><span class="q-text">A <code>while</code> loop executes at least once.</span></div><div class="tf-options"><button class="tf-btn" onclick="answerTF(this,'True','False','sheets')">True</button><button class="tf-btn" onclick="answerTF(this,'False','False','sheets')">False</button></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>False — A <code>while</code> loop checks its condition first; if the condition is initially false, the loop body never executes.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q107</span><span class="q-type-badge badge-tf">True/False</span><span class="q-text">A <code>do-while</code> loop executes at least once.</span></div><div class="tf-options"><button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button><button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — The <code>do-while</code> loop executes its body first, then checks the condition, so it always runs at least once.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q108</span><span class="q-type-badge badge-tf">True/False</span><span class="q-text">A <code>for</code> loop is commonly used when the number of iterations is known.</span></div><div class="tf-options"><button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button><button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — The <code>for</code> loop is ideal when the exact number of iterations is known in advance.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q109</span><span class="q-type-badge badge-tf">True/False</span><span class="q-text">The <code>break</code> statement terminates a loop immediately.</span></div><div class="tf-options"><button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button><button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — <code>break</code> immediately exits the innermost loop or switch statement.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q110</span><span class="q-type-badge badge-tf">True/False</span><span class="q-text">The <code>continue</code> statement exits the program.</span></div><div class="tf-options"><button class="tf-btn" onclick="answerTF(this,'True','False','sheets')">True</button><button class="tf-btn" onclick="answerTF(this,'False','False','sheets')">False</button></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>False — <code>continue</code> skips the rest of the current loop iteration and jumps to the next iteration; it does not exit the program.</div></div>
+
+    <div class="category-label">📋 Sheet 7 — Multiple Choice</div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q111</span><span class="q-type-badge badge-mcq">MCQ</span><span class="q-text">Which statement is used for decision making?</span></div><div class="options"><div class="option" onclick="answerMCQ(this,'a','b','sheets')"><span class="opt-letter">A</span>cout</div><div class="option" onclick="answerMCQ(this,'b','b','sheets')"><span class="opt-letter">B</span>if</div><div class="option" onclick="answerMCQ(this,'c','b','sheets')"><span class="opt-letter">C</span>cin</div><div class="option" onclick="answerMCQ(this,'d','b','sheets')"><span class="opt-letter">D</span>endl</div></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>B — <code>if</code> is the primary decision-making (selection) statement in C++.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q112</span><span class="q-type-badge badge-mcq">MCQ</span><span class="q-text">Which statement is used for multiple selections?</span></div><div class="options"><div class="option" onclick="answerMCQ(this,'a','c','sheets')"><span class="opt-letter">A</span>if</div><div class="option" onclick="answerMCQ(this,'b','c','sheets')"><span class="opt-letter">B</span>while</div><div class="option" onclick="answerMCQ(this,'c','c','sheets')"><span class="opt-letter">C</span>switch</div><div class="option" onclick="answerMCQ(this,'d','c','sheets')"><span class="opt-letter">D</span>for</div></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>C — <code>switch</code> allows selecting from multiple cases based on a single value.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q113</span><span class="q-type-badge badge-mcq">MCQ</span><span class="q-text">Which loop checks its condition before execution?</span></div><div class="options"><div class="option" onclick="answerMCQ(this,'a','b','sheets')"><span class="opt-letter">A</span>do-while</div><div class="option" onclick="answerMCQ(this,'b','b','sheets')"><span class="opt-letter">B</span>while</div><div class="option" onclick="answerMCQ(this,'c','b','sheets')"><span class="opt-letter">C</span>function</div><div class="option" onclick="answerMCQ(this,'d','b','sheets')"><span class="opt-letter">D</span>switch</div></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>B — The <code>while</code> loop is a pre-test loop: it checks the condition before executing the body.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q114</span><span class="q-type-badge badge-mcq">MCQ</span><span class="q-text">Which loop executes at least once?</span></div><div class="options"><div class="option" onclick="answerMCQ(this,'a','c','sheets')"><span class="opt-letter">A</span>while</div><div class="option" onclick="answerMCQ(this,'b','c','sheets')"><span class="opt-letter">B</span>for</div><div class="option" onclick="answerMCQ(this,'c','c','sheets')"><span class="opt-letter">C</span>do-while</div><div class="option" onclick="answerMCQ(this,'d','c','sheets')"><span class="opt-letter">D</span>switch</div></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>C — The <code>do-while</code> loop is a post-test loop; its body executes at least once before the condition is checked.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q115</span><span class="q-type-badge badge-mcq">MCQ</span><span class="q-text">Which keyword terminates a loop?</span></div><div class="options"><div class="option" onclick="answerMCQ(this,'a','c','sheets')"><span class="opt-letter">A</span>continue</div><div class="option" onclick="answerMCQ(this,'b','c','sheets')"><span class="opt-letter">B</span>stop</div><div class="option" onclick="answerMCQ(this,'c','c','sheets')"><span class="opt-letter">C</span>break</div><div class="option" onclick="answerMCQ(this,'d','c','sheets')"><span class="opt-letter">D</span>exit</div></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>C — <code>break</code> immediately terminates the innermost loop or switch.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q116</span><span class="q-type-badge badge-mcq">MCQ</span><span class="q-text">Which keyword skips the current iteration?</span></div><div class="options"><div class="option" onclick="answerMCQ(this,'a','a','sheets')"><span class="opt-letter">A</span>continue</div><div class="option" onclick="answerMCQ(this,'b','a','sheets')"><span class="opt-letter">B</span>break</div><div class="option" onclick="answerMCQ(this,'c','a','sheets')"><span class="opt-letter">C</span>stop</div><div class="option" onclick="answerMCQ(this,'d','a','sheets')"><span class="opt-letter">D</span>next</div></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>A — <code>continue</code> skips the remaining statements in the current iteration and moves to the next.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q117</span><span class="q-type-badge badge-mcq">MCQ</span><span class="q-text">How many times will this loop execute? <code>for(int i=1; i&lt;=5; i++)</code></span></div><div class="options"><div class="option" onclick="answerMCQ(this,'a','b','sheets')"><span class="opt-letter">A</span>4</div><div class="option" onclick="answerMCQ(this,'b','b','sheets')"><span class="opt-letter">B</span>5</div><div class="option" onclick="answerMCQ(this,'c','b','sheets')"><span class="opt-letter">C</span>6</div><div class="option" onclick="answerMCQ(this,'d','b','sheets')"><span class="opt-letter">D</span>Infinite</div></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>B — The loop runs for i = 1, 2, 3, 4, 5 → 5 times total.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q118</span><span class="q-type-badge badge-mcq">MCQ</span><span class="q-text">Which operator is used for logical AND?</span></div><div class="options"><div class="option" onclick="answerMCQ(this,'a','c','sheets')"><span class="opt-letter">A</span>&amp;</div><div class="option" onclick="answerMCQ(this,'b','c','sheets')"><span class="opt-letter">B</span>AND</div><div class="option" onclick="answerMCQ(this,'c','c','sheets')"><span class="opt-letter">C</span>&amp;&amp;</div><div class="option" onclick="answerMCQ(this,'d','c','sheets')"><span class="opt-letter">D</span>||</div></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>C — <code>&amp;&amp;</code> is the logical AND operator in C++. It returns true only if both operands are true.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q119</span><span class="q-type-badge badge-mcq">MCQ</span><span class="q-text">Which operator is used for logical OR?</span></div><div class="options"><div class="option" onclick="answerMCQ(this,'a','a','sheets')"><span class="opt-letter">A</span>||</div><div class="option" onclick="answerMCQ(this,'b','a','sheets')"><span class="opt-letter">B</span>&amp;&amp;</div><div class="option" onclick="answerMCQ(this,'c','a','sheets')"><span class="opt-letter">C</span>OR</div><div class="option" onclick="answerMCQ(this,'d','a','sheets')"><span class="opt-letter">D</span>%</div></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>A — <code>||</code> is the logical OR operator; it returns true if at least one operand is true.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q120</span><span class="q-type-badge badge-mcq">MCQ</span><span class="q-text">Which operator is used for logical NOT?</span></div><div class="options"><div class="option" onclick="answerMCQ(this,'a','b','sheets')"><span class="opt-letter">A</span>!=</div><div class="option" onclick="answerMCQ(this,'b','b','sheets')"><span class="opt-letter">B</span>!</div><div class="option" onclick="answerMCQ(this,'c','b','sheets')"><span class="opt-letter">C</span>~</div><div class="option" onclick="answerMCQ(this,'d','b','sheets')"><span class="opt-letter">D</span>&lt;&gt;</div></div><div class="answer-display"><div class="ans-label">✅ ANSWER</div>B — <code>!</code> is the logical NOT operator; it reverses a boolean value.</div></div>
+
+    <div class="category-label">📋 Sheet 7 — Expression Evaluation</div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q121</span><span class="q-type-badge badge-expr">Expression</span><span class="q-text">Evaluate: <code>5 &gt; 3</code></span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>True — 5 is greater than 3.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q122</span><span class="q-type-badge badge-expr">Expression</span><span class="q-text">Evaluate: <code>10 &lt; 4</code></span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>False — 10 is not less than 4.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q123</span><span class="q-type-badge badge-expr">Expression</span><span class="q-text">Evaluate: <code>5 == 5</code></span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>True — 5 is equal to 5.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q124</span><span class="q-type-badge badge-expr">Expression</span><span class="q-text">Evaluate: <code>8 != 3</code></span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>True — 8 is not equal to 3.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q125</span><span class="q-type-badge badge-expr">Expression</span><span class="q-text">Evaluate: <code>(5&gt;3) &amp;&amp; (8&gt;2)</code></span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>True — Both conditions are true: (5&gt;3) is true AND (8&gt;2) is true.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q126</span><span class="q-type-badge badge-expr">Expression</span><span class="q-text">Evaluate: <code>(5&gt;8) || (7&gt;3)</code></span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>True — (5&gt;8) is false, but (7&gt;3) is true. Since one is true, the OR result is true.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q127</span><span class="q-type-badge badge-expr">Expression</span><span class="q-text">Evaluate: <code>!(5&gt;3)</code></span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>False — (5&gt;3) is true, and NOT true = false.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q128</span><span class="q-type-badge badge-expr">Expression</span><span class="q-text">Evaluate: <code>10 &gt;= 10</code></span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>True — 10 is equal to 10, so the "greater than or equal" condition is satisfied.</div></div>
+
+    <div class="category-label">📋 Sheet 7 — Code Output</div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q129</span><span class="q-type-badge badge-code">Code Output</span><span class="q-text">What is the output?<pre class="code-block">int x=5;
+if(x&gt;3)
+  cout&lt;&lt;"Yes";
+else
+  cout&lt;&lt;"No";</pre></span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div><pre class="code-block">Yes</pre>Since x=5 and 5&gt;3 is true, the if-branch executes.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q130</span><span class="q-type-badge badge-code">Code Output</span><span class="q-text">What is the output?<pre class="code-block">int x=2;
+if(x&gt;3)
+  cout&lt;&lt;"A";
+else
+  cout&lt;&lt;"B";</pre></span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div><pre class="code-block">B</pre>Since 2&gt;3 is false, the else-branch executes.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q131</span><span class="q-type-badge badge-code">Code Output</span><span class="q-text">What is the output?<pre class="code-block">for(int i=1; i&lt;=3; i++)
+  cout&lt;&lt;i;</pre></span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div><pre class="code-block">123</pre>The loop runs for i=1,2,3 and prints each value.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q132</span><span class="q-type-badge badge-code">Code Output</span><span class="q-text">What is the output?<pre class="code-block">int i=1;
+while(i&lt;=3){
+  cout&lt;&lt;i;
+  i++;
+}</pre></span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div><pre class="code-block">123</pre>The while loop runs as long as i≤3, printing 1, 2, 3.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q133</span><span class="q-type-badge badge-code">Code Output</span><span class="q-text">What is the output?<pre class="code-block">int i=1;
+do{
+  cout&lt;&lt;i;
+  i++;
+}while(i&lt;=3);</pre></span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div><pre class="code-block">123</pre>The do-while loop prints i first, then checks the condition. Prints 1, 2, 3.</div></div>
+
+    <div class="category-label">📋 Sheet 7 — Error Detection</div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q134</span><span class="q-type-badge badge-code">Error Detection</span><span class="q-text">Find the error:<pre class="code-block">if x&gt;5
+  cout&lt;&lt;"OK";</pre></span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>Error: condition must be in parentheses.<pre class="code-block">if(x&gt;5)
+  cout&lt;&lt;"OK";</pre></div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q135</span><span class="q-type-badge badge-code">Error Detection</span><span class="q-text">Find the error:<pre class="code-block">if(x=5)</pre></span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>Error: <code>=</code> is assignment, not comparison. Should be:<pre class="code-block">if(x==5)</pre></div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q136</span><span class="q-type-badge badge-code">Error Detection</span><span class="q-text">Find the error:<pre class="code-block">while(i&lt;=5)
+  cout&lt;&lt;i</pre></span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>Error: Missing semicolon after the cout statement.<pre class="code-block">while(i&lt;=5)
+  cout&lt;&lt;i;</pre></div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q137</span><span class="q-type-badge badge-code">Error Detection</span><span class="q-text">Find the error:<pre class="code-block">for(int i=1; i&lt;=5; i++);
+{
+  cout&lt;&lt;i;
+}</pre></span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>Error: Semicolon after <code>for()</code> creates an empty loop body; the block runs only once afterward. Remove the semicolon.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q138</span><span class="q-type-badge badge-code">Error Detection</span><span class="q-text">Find the error: <code>break;</code> used outside any loop.</span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>Error: <code>break</code> must be inside a loop or switch statement. It cannot appear outside these structures.</div></div>
+
+    <div class="category-label">📋 Sheet 7 — Short Answer</div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q139</span><span class="q-type-badge badge-sa">Short Answer</span><span class="q-text">What is the purpose of an if statement?</span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>To execute a block of code conditionally — only when a specified condition evaluates to true.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q140</span><span class="q-type-badge badge-sa">Short Answer</span><span class="q-text">What is the purpose of a switch statement?</span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>To select one action from multiple choices based on the value of an integer or character expression.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q141</span><span class="q-type-badge badge-sa">Short Answer</span><span class="q-text">What is an infinite loop?</span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>A loop whose condition never becomes false, causing it to execute forever (until the program is forcibly terminated).</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q142</span><span class="q-type-badge badge-sa">Short Answer</span><span class="q-text">What is a loop counter?</span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>A variable used to track the number of times a loop has executed, typically incremented or decremented with each iteration.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q143</span><span class="q-type-badge badge-sa">Short Answer</span><span class="q-text">What is a nested if statement?</span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>An if statement placed inside another if (or else) block, used to test multiple conditions in a hierarchical way.</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q144</span><span class="q-type-badge badge-sa">Short Answer</span><span class="q-text">What is the purpose of break?</span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>To immediately terminate the execution of a loop or switch statement and transfer control to the statement following it.</div></div>
+
+    <div class="category-label">📋 Sheet 7 — Programming Problems</div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q145</span><span class="q-type-badge badge-prog">Programming</span><span class="q-text">Write a program to determine whether a number is positive or negative.</span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER — C++ Code</div><pre class="code-block">#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    double num;
+    cout &lt;&lt; "Enter a number: "; cin &gt;&gt; num;
+    if (num &gt; 0)
+        cout &lt;&lt; "Positive" &lt;&lt; endl;
+    else if (num &lt; 0)
+        cout &lt;&lt; "Negative" &lt;&lt; endl;
+    else
+        cout &lt;&lt; "Zero" &lt;&lt; endl;
+    return 0;
+}</pre></div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q146</span><span class="q-type-badge badge-prog">Programming</span><span class="q-text">Write a program to find the largest of three numbers.</span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER — C++ Code</div><pre class="code-block">#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    double a, b, c;
+    cout &lt;&lt; "Enter three numbers: "; cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+    double largest = a;
+    if (b &gt; largest) largest = b;
+    if (c &gt; largest) largest = c;
+    cout &lt;&lt; "Largest = " &lt;&lt; largest &lt;&lt; endl;
+    return 0;
+}</pre></div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q147</span><span class="q-type-badge badge-prog">Programming</span><span class="q-text">Write a program to print numbers from 1 to 100 using a loop.</span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER — C++ Code</div><pre class="code-block">#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    for (int i = 1; i &lt;= 100; i++)
+        cout &lt;&lt; i &lt;&lt; " ";
+    cout &lt;&lt; endl;
+    return 0;
+}</pre></div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q148</span><span class="q-type-badge badge-prog">Programming</span><span class="q-text">Write a program to calculate the factorial of a number.</span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER — C++ Code</div><pre class="code-block">#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    int n;
+    long long fact = 1;
+    cout &lt;&lt; "Enter a positive integer: "; cin &gt;&gt; n;
+    for (int i = 1; i &lt;= n; i++)
+        fact *= i;
+    cout &lt;&lt; n &lt;&lt; "! = " &lt;&lt; fact &lt;&lt; endl;
+    return 0;
+}</pre></div></div>
+
+    <div class="category-label">📋 Sheet 7 — Algorithm Design</div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q149</span><span class="q-type-badge badge-prog">Algorithm</span><span class="q-text">Design an algorithm to determine whether a student passed or failed.</span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER — Algorithm</div>1. Start<br/>2. Read student's average grade<br/>3. If average &gt;= 60 → Output "Pass"<br/>4. Else → Output "Fail"<br/>5. End</div></div>
+
+    <div class="question" data-section="sheets"><div class="q-header"><span class="q-num">S7·Q150</span><span class="q-type-badge badge-prog">Algorithm</span><span class="q-text">Design an algorithm to calculate the sum of the first N positive integers.</span></div><div class="answer-display visible"><div class="ans-label">✅ ANSWER — Algorithm</div>1. Start<br/>2. Read N<br/>3. Set sum = 0, i = 1<br/>4. While i &lt;= N: sum = sum + i; i = i + 1<br/>5. Output sum<br/>6. End<br/><br/><strong>Formula shortcut:</strong> sum = N × (N+1) / 2</div></div>
+
   </div><!-- end sheets-questions -->
 </div><!-- end section-sheets -->
 
@@ -1305,19 +1741,54 @@ int main() {
   </div>
 
   <div class="section-header">
-    <h2 style="color:var(--accent3)">📚 Sections Questions</h2>
+    <h2 style="color:var(--accent3)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+      Sections Questions
+    </h2>
     <span class="badge" id="sections-count">Loading…</span>
   </div>
 
+  <div class="section-progress"><div class="section-progress-fill" id="sections-progress-fill"></div></div>
+
   <div class="inner-actions">
     <div class="mode-toggle">
-      <button class="mode-opt active" onclick="setMode('sections','study',this)">📖 Study Mode</button>
-      <button class="mode-opt" onclick="setMode('sections','quiz',this)">⚡ Quiz Mode</button>
-      <button class="mode-opt" onclick="setMode('sections','reveal',this)">👁 Show All Answers</button>
+      <button class="mode-opt active" onclick="setMode('sections','study',this)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        Study
+      </button>
+      <button class="mode-opt" onclick="setMode('sections','quiz',this)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Quiz
+      </button>
+      <button class="mode-opt" onclick="setMode('sections','reveal',this)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Reveal All
+      </button>
     </div>
     <div class="search-container"><input type="text" placeholder="Search questions…" oninput="filterQuestions('sections',this.value)"/></div>
-    <button class="print-btn" onclick="window.print()">🖨 Print / PDF</button>
-  </div>
+    <button class="shuffle-btn" onclick="shuffleQuestions('sections')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+      Shuffle
+    </button>
+    <button class="bookmarks-filter-btn" id="sections-bm-filter" onclick="toggleBookmarkFilter('sections')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+      Saved
+    </button>
+    <div class="quiz-timer" id="sections-timer">
+      <svg class="timer-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span id="sections-timer-val">0:00</span>
+    </div>
+    <div class="action-group">
+      <button class="download-btn" onclick="downloadPage()">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download
+      </button>
+      <button class="print-action-btn" onclick="window.print()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print
+      </button>
+    </div>
+  </div><!-- end inner-actions -->
 
   <div id="sections-questions">
 
@@ -1748,19 +2219,54 @@ int main() {
   </div>
 
   <div class="section-header">
-    <h2 style="color:var(--accent2)">🎓 Lectures Questions</h2>
+    <h2 style="color:var(--accent2)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      Lectures Questions
+    </h2>
     <span class="badge" id="lectures-count">Loading…</span>
   </div>
 
+  <div class="section-progress"><div class="section-progress-fill" id="lectures-progress-fill"></div></div>
+
   <div class="inner-actions">
     <div class="mode-toggle">
-      <button class="mode-opt active" onclick="setMode('lectures','study',this)">📖 Study Mode</button>
-      <button class="mode-opt" onclick="setMode('lectures','quiz',this)">⚡ Quiz Mode</button>
-      <button class="mode-opt" onclick="setMode('lectures','reveal',this)">👁 Show All Answers</button>
+      <button class="mode-opt active" onclick="setMode('lectures','study',this)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        Study
+      </button>
+      <button class="mode-opt" onclick="setMode('lectures','quiz',this)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Quiz
+      </button>
+      <button class="mode-opt" onclick="setMode('lectures','reveal',this)">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Reveal All
+      </button>
     </div>
     <div class="search-container"><input type="text" placeholder="Search questions…" oninput="filterQuestions('lectures',this.value)"/></div>
-    <button class="print-btn" onclick="window.print()">🖨 Print / PDF</button>
-  </div>
+    <button class="shuffle-btn" onclick="shuffleQuestions('lectures')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+      Shuffle
+    </button>
+    <button class="bookmarks-filter-btn" id="lectures-bm-filter" onclick="toggleBookmarkFilter('lectures')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+      Saved
+    </button>
+    <div class="quiz-timer" id="lectures-timer">
+      <svg class="timer-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span id="lectures-timer-val">0:00</span>
+    </div>
+    <div class="action-group">
+      <button class="download-btn" onclick="downloadPage()">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download
+      </button>
+      <button class="print-action-btn" onclick="window.print()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print
+      </button>
+    </div>
+  </div><!-- end inner-actions -->
 
   <div id="lectures-questions">
 
@@ -2499,7 +3005,10 @@ Area = 24</pre>
 <div class="score-bar" id="score-bar" style="display:none;">
   <div class="score-nums">Score: <span id="score-correct">0</span> / <span id="score-total">0</span> &nbsp;|&nbsp; <span id="score-pct">0%</span></div>
   <div class="score-progress"><div class="score-fill" id="score-fill" style="width:0%"></div></div>
-  <button class="reset-btn" onclick="resetCurrent()">↺ Reset</button>
+  <button class="reset-btn" onclick="resetCurrent()">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+    Reset
+  </button>
 </div>
 
 <script>
@@ -2507,6 +3016,34 @@ Area = 24</pre>
 var currentSection = null;
 var scores = { sheets:{correct:0,total:0}, sections:{correct:0,total:0}, lectures:{correct:0,total:0} };
 var modes  = { sheets:'study', sections:'study', lectures:'study' };
+var bookmarks = JSON.parse(localStorage.getItem('csc124_bookmarks') || '{}');
+var bookmarkFilters = { sheets:false, sections:false, lectures:false };
+var timers = { sheets:null, sections:null, lectures:null };
+var timerSeconds = { sheets:0, sections:0, lectures:0 };
+var lightMode = false;
+
+// ── THEME ──
+function toggleTheme(){
+  lightMode = !lightMode;
+  document.body.classList.toggle('light-mode', lightMode);
+  document.getElementById('theme-icon-dark').style.display = lightMode ? 'none' : '';
+  document.getElementById('theme-icon-light').style.display = lightMode ? '' : 'none';
+  localStorage.setItem('csc124_theme', lightMode ? 'light' : 'dark');
+  showToast(lightMode ? '☀️ Light mode on' : '🌙 Dark mode on');
+}
+
+// ── TOAST ──
+function showToast(msg){
+  var t = document.getElementById('csc124-toast');
+  if(!t){ t = document.createElement('div'); t.id='csc124-toast'; t.className='toast'; document.body.appendChild(t); }
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._to);
+  t._to = setTimeout(function(){ t.classList.remove('show'); }, 2200);
+}
+
+// ── SCROLL TO TOP ──
+function scrollToTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
 
 // ── SECTION TOGGLE ──
 function showSection(name){
@@ -2529,6 +3066,7 @@ function showSection(name){
   document.getElementById('score-bar').style.display='flex';
   updateScore(name);
   updateCounts();
+  updateHeroStats();
   section.scrollIntoView({behavior:'smooth'});
 }
 
@@ -2544,6 +3082,36 @@ function updateCounts(){
   });
 }
 
+// ── HERO STATS ──
+function updateHeroStats(){
+  var total = 0, answered = 0, correct = 0, bms = 0;
+  ['sheets','sections','lectures'].forEach(function(s){
+    var c = document.getElementById(s+'-questions');
+    if(c){ total += c.querySelectorAll('.question').length; }
+    answered += scores[s].total;
+    correct += scores[s].correct;
+  });
+  bms = Object.keys(bookmarks).filter(function(k){ return bookmarks[k]; }).length;
+  var stTotal = document.getElementById('stat-total');
+  var stAns = document.getElementById('stat-answered');
+  var stCorr = document.getElementById('stat-correct');
+  var stBm = document.getElementById('stat-bookmarks');
+  if(stTotal) stTotal.textContent = total;
+  if(stAns) stAns.textContent = answered;
+  if(stCorr) stCorr.textContent = correct;
+  if(stBm) stBm.textContent = bms;
+}
+
+// ── SECTION PROGRESS BAR ──
+function updateSectionProgress(section){
+  var container = document.getElementById(section+'-questions');
+  var fill = document.getElementById(section+'-progress-fill');
+  if(!container || !fill) return;
+  var qs = container.querySelectorAll('.question');
+  var ans = container.querySelectorAll('.question[data-answered]');
+  fill.style.width = qs.length ? (ans.length/qs.length*100)+'%' : '0%';
+}
+
 // ── MODE ──
 function setMode(section, mode, btn){
   modes[section] = mode;
@@ -2551,13 +3119,20 @@ function setMode(section, mode, btn){
   btn.classList.add('active');
   var container = document.getElementById(section+'-questions');
   var questions  = container.querySelectorAll('.question');
+  // Timer logic
+  if(mode === 'quiz'){
+    startTimer(section);
+    document.getElementById(section+'-timer').classList.add('visible');
+  } else {
+    stopTimer(section);
+    document.getElementById(section+'-timer').classList.remove('visible');
+  }
   questions.forEach(function(q){
     var answers  = q.querySelectorAll('.answer-display');
     var options  = q.querySelectorAll('.option');
     var tfBtns   = q.querySelectorAll('.tf-btn');
     if(mode === 'study'){
       answers.forEach(function(a){
-        // Only show if it was already answered OR is a non-interactive type
         if(!a.classList.contains('was-answered')) a.classList.remove('visible');
       });
     } else if(mode === 'quiz'){
@@ -2566,11 +3141,30 @@ function setMode(section, mode, btn){
       tfBtns.forEach(function(b){ b.classList.remove('correct','wrong'); });
     } else if(mode === 'reveal'){
       answers.forEach(function(a){ a.classList.add('visible'); });
-      options.forEach(function(o){
-        // Mark only correct answers
-      });
     }
   });
+}
+
+// ── TIMER ──
+function startTimer(section){
+  stopTimer(section);
+  timerSeconds[section] = 0;
+  timers[section] = setInterval(function(){
+    timerSeconds[section]++;
+    var s = timerSeconds[section];
+    var m = Math.floor(s/60);
+    var sec = s%60;
+    var el = document.getElementById(section+'-timer-val');
+    var tw = document.getElementById(section+'-timer');
+    if(el) el.textContent = m+':'+(sec<10?'0':'')+sec;
+    if(tw){
+      if(s > 1800) tw.classList.add('danger'); // 30 min warning
+      else tw.classList.remove('danger');
+    }
+  }, 1000);
+}
+function stopTimer(section){
+  if(timers[section]){ clearInterval(timers[section]); timers[section]=null; }
 }
 
 // ── MCQ ANSWER ──
@@ -2592,11 +3186,15 @@ function answerMCQ(clickedOption, chosen, correct, section){
   if(chosen===correct){
     question.classList.add('answered-correct');
     scores[section].correct++;
+    showToast('✅ Correct!');
   } else {
     question.classList.add('answered-wrong');
+    showToast('❌ Wrong — check the answer');
   }
   scores[section].total++;
   updateScore(section);
+  updateSectionProgress(section);
+  updateHeroStats();
 }
 
 // ── TF ANSWER ──
@@ -2617,11 +3215,15 @@ function answerTF(clickedBtn, chosen, correct, section){
   if(chosen===correct){
     question.classList.add('answered-correct');
     scores[section].correct++;
+    showToast('✅ Correct!');
   } else {
     question.classList.add('answered-wrong');
+    showToast('❌ Wrong — check the answer');
   }
   scores[section].total++;
   updateScore(section);
+  updateSectionProgress(section);
+  updateHeroStats();
 }
 
 // ── SCORE UPDATE ──
@@ -2643,15 +3245,94 @@ function resetCurrent(){
     delete q.dataset.answered;
     q.classList.remove('answered-correct','answered-wrong');
     q.querySelectorAll('.option').forEach(function(o){ o.classList.remove('correct','wrong','reveal'); });
-    q.querySelectorAll('.tf-btn').forEach(function(b){ b.classList.remove('correct','wrong'); });
+    q.querySelectorAll('.tf-btn').forEach(function(b){ b.classList.remove('correct','wrong','reveal'); });
     q.querySelectorAll('.answer-display').forEach(function(a){
       a.classList.remove('visible','was-answered');
     });
+    q.style.display = '';
   });
+  stopTimer(currentSection);
+  document.getElementById(currentSection+'-timer').classList.remove('visible');
+  timerSeconds[currentSection]=0;
+  var el = document.getElementById(currentSection+'-timer-val');
+  if(el) el.textContent='0:00';
   updateScore(currentSection);
+  updateSectionProgress(currentSection);
+  updateHeroStats();
+  showToast('↺ Section reset');
 }
 
-// ── SEARCH / FILTER ──
+// ── SHUFFLE ──
+function shuffleQuestions(section){
+  var container = document.getElementById(section+'-questions');
+  var questions = Array.from(container.querySelectorAll('.question'));
+  // Fisher-Yates shuffle
+  for(var i=questions.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var tmp=questions[i];questions[i]=questions[j];questions[j]=tmp;
+  }
+  questions.forEach(function(q){ container.appendChild(q); });
+  showToast('🔀 Questions shuffled!');
+}
+
+// ── BOOKMARKS ──
+function toggleBookmark(btn, qid){
+  bookmarks[qid] = !bookmarks[qid];
+  localStorage.setItem('csc124_bookmarks', JSON.stringify(bookmarks));
+  btn.classList.toggle('bookmarked', bookmarks[qid]);
+  updateHeroStats();
+  showToast(bookmarks[qid] ? '🔖 Bookmarked' : '🔖 Removed bookmark');
+}
+
+function toggleBookmarkFilter(section){
+  bookmarkFilters[section] = !bookmarkFilters[section];
+  var filterBtn = document.getElementById(section+'-bm-filter');
+  if(filterBtn) filterBtn.classList.toggle('active', bookmarkFilters[section]);
+  var container = document.getElementById(section+'-questions');
+  container.querySelectorAll('.question').forEach(function(q){
+    var qid = q.dataset.qid;
+    if(bookmarkFilters[section]){
+      q.style.display = (qid && bookmarks[qid]) ? '' : 'none';
+    } else {
+      q.style.display = '';
+    }
+  });
+  showToast(bookmarkFilters[section] ? '🔖 Showing bookmarked only' : '📋 Showing all questions');
+}
+
+// ── ADD BOOKMARK BUTTONS TO ALL QUESTIONS ──
+function addBookmarkButtons(){
+  document.querySelectorAll('.question').forEach(function(q, i){
+    var section = q.dataset.section || 'sheets';
+    var numEl = q.querySelector('.q-num');
+    var qid = numEl ? numEl.textContent.trim().replace(/[^a-zA-Z0-9]/g,'_') : 'q_'+i;
+    q.dataset.qid = qid;
+    if(!q.querySelector('.bookmark-btn')){
+      var btn = document.createElement('button');
+      btn.className = 'bookmark-btn' + (bookmarks[qid] ? ' bookmarked' : '');
+      btn.title = 'Bookmark this question';
+      btn.setAttribute('onclick', 'toggleBookmark(this,"'+qid+'")');
+      btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="'+(bookmarks[qid]?'var(--gold)':'none')+'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>';
+      q.appendChild(btn);
+    }
+  });
+}
+
+// ── DOWNLOAD ──
+function downloadPage(){
+  var html = document.documentElement.outerHTML;
+  var blob = new Blob([html], {type:'text/html;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'CSC124-ExamPrep.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 1000);
+  showToast('⬇️ Downloading...');
+}
+
+// ── GLOBAL SEARCH ──
 function filterQuestions(section, query){
   var container = document.getElementById(section+'-questions');
   var questions  = container.querySelectorAll('.question');
@@ -2662,9 +3343,78 @@ function filterQuestions(section, query){
   });
 }
 
+// ── KEYBOARD SHORTCUTS ──
+document.addEventListener('keydown', function(e){
+  // Don't fire when typing in inputs
+  if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if(!currentSection) return;
+  if(e.key === 's' || e.key === 'S'){ shuffleQuestions(currentSection); }
+  if(e.key === 'b' || e.key === 'B'){ toggleBookmarkFilter(currentSection); }
+  if(e.key === 'r' || e.key === 'R'){ resetCurrent(); }
+  if(e.key === 't' || e.key === 'T'){ toggleTheme(); }
+});
+
 // ── INIT ──
 document.addEventListener('DOMContentLoaded', function(){
+  // Restore theme
+  if(localStorage.getItem('csc124_theme')==='light'){ toggleTheme(); }
+
   updateCounts();
+  updateHeroStats();
+  addBookmarkButtons();
+
+  // Particles
+  var pbg = document.getElementById('particles-bg');
+  for(var i=0;i<18;i++){
+    var p=document.createElement('div');
+    p.className='particle';
+    var s=Math.random()*14+4;
+    p.style.cssText='width:'+s+'px;height:'+s+'px;left:'+Math.random()*100+'%;background:hsl('+Math.floor(Math.random()*60+180)+',70%,60%);animation-duration:'+(Math.random()*18+10)+'s;animation-delay:'+(-Math.random()*20)+'s;';
+    pbg.appendChild(p);
+  }
+
+  // Global search
+  var gsi = document.getElementById('global-search-input');
+  var gsr = document.getElementById('global-search-results');
+  if(gsi){
+    gsi.addEventListener('input', function(){
+      var q = this.value.trim().toLowerCase();
+      if(!q){ gsr.style.display='none'; return; }
+      var results = [];
+      document.querySelectorAll('.question').forEach(function(qu){
+        var text = qu.querySelector('.q-text') ? qu.querySelector('.q-text').textContent.trim() : '';
+        var num  = qu.querySelector('.q-num') ? qu.querySelector('.q-num').textContent.trim() : '';
+        var sec  = qu.dataset.section || 'sheets';
+        if(text.toLowerCase().includes(q) || num.toLowerCase().includes(q)){
+          results.push({text:text, num:num, sec:sec, el:qu});
+        }
+      });
+      if(!results.length){
+        gsr.innerHTML='<div class="gsr-empty">No results found.</div>';
+      } else {
+        gsr.innerHTML = results.slice(0,12).map(function(r,i){
+          return '<div class="gsr-item" data-idx="'+i+'"><div class="gsr-title">'+r.text.slice(0,80)+(r.text.length>80?'…':'')+'</div><div class="gsr-sub"><span class="gsr-tag gsr-tag-'+(r.sec==='sheets'?'sheet':r.sec==='sections'?'section':'lecture')+'">'+r.num+'</span></div></div>';
+        }).join('');
+        gsr.querySelectorAll('.gsr-item').forEach(function(item, i){
+          item.addEventListener('click', function(){
+            var r = results[i];
+            showSection(r.sec);
+            setTimeout(function(){
+              r.el.scrollIntoView({behavior:'smooth',block:'center'});
+              r.el.style.boxShadow='0 0 0 2px var(--accent)';
+              setTimeout(function(){ r.el.style.boxShadow=''; }, 2000);
+            }, 300);
+            gsr.style.display='none';
+            gsi.value='';
+          });
+        });
+      }
+      gsr.style.display='block';
+    });
+    document.addEventListener('click', function(e){
+      if(!gsr.contains(e.target) && e.target !== gsi) gsr.style.display='none';
+    });
+  }
 });
 </script>
 </body>
