@@ -1,0 +1,2671 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CSC124 – Structured Programming | Exam Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0a0b0f;
+  --surface:#111318;
+  --surface2:#181c24;
+  --border:#252a36;
+  --accent:#00e5ff;
+  --accent2:#ff3d6b;
+  --accent3:#a78bfa;
+  --gold:#fbbf24;
+  --text:#e8eaf0;
+  --text2:#8892a4;
+  --correct:#10b981;
+  --wrong:#ef4444;
+  --radius:10px;
+  --shadow:0 4px 24px rgba(0,0,0,.5);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden;}
+
+/* ── PARTICLES ── */
+#particles-bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden;}
+.particle{position:absolute;border-radius:50%;opacity:.08;animation:floatP linear infinite;}
+@keyframes floatP{0%{transform:translateY(100vh) rotate(0deg);opacity:0;}10%{opacity:.08;}90%{opacity:.08;}100%{transform:translateY(-100px) rotate(720deg);opacity:0;}}
+
+/* ── NAVBAR ── */
+.global-nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(10,11,15,.92);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:0 32px;height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo-text{
+  font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;
+  color:var(--accent);letter-spacing:.02em;text-decoration:none;
+}
+.nav-logo-text span{color:var(--accent2);}
+.nav-links-list{display:flex;gap:4px;list-style:none;align-items:center;}
+.nav-links-list a{
+  color:var(--text2);text-decoration:none;font-size:.82rem;font-weight:500;
+  padding:5px 12px;border-radius:7px;transition:all .2s;
+}
+.nav-links-list a:hover,.nav-links-list a.active{color:var(--text);background:var(--surface2);}
+.nav-search-wrap{
+  display:flex;align-items:center;gap:8px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;padding:6px 14px;transition:border-color .2s;
+}
+.nav-search-wrap:focus-within{border-color:var(--accent);}
+.nav-search-wrap input{
+  background:none;border:none;outline:none;color:var(--text);
+  font-family:'IBM Plex Mono',monospace;font-size:.82rem;width:200px;
+}
+.nav-search-wrap input::placeholder{color:var(--text2);}
+
+/* ── GLOBAL SEARCH RESULTS ── */
+#global-search-results{
+  display:none;position:fixed;top:68px;right:32px;
+  width:380px;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);box-shadow:0 12px 40px rgba(0,0,0,.6);
+  z-index:300;max-height:440px;overflow-y:auto;
+}
+.gsr-item{
+  padding:13px 16px;border-bottom:1px solid var(--border);
+  cursor:pointer;transition:background .15s;
+}
+.gsr-item:last-child{border-bottom:none;}
+.gsr-item:hover{background:var(--surface2);}
+.gsr-title{font-size:.84rem;font-weight:600;color:var(--text);margin-bottom:3px;}
+.gsr-sub{font-size:.72rem;color:var(--text2);}
+.gsr-tag{
+  display:inline-block;font-size:.63rem;padding:2px 7px;border-radius:20px;
+  margin-top:4px;font-weight:600;letter-spacing:.3px;
+}
+.gsr-tag-sheet{background:rgba(0,229,255,.12);color:var(--accent);}
+.gsr-tag-section{background:rgba(167,139,250,.12);color:var(--accent3);}
+.gsr-tag-lecture{background:rgba(255,61,107,.12);color:var(--accent2);}
+.gsr-empty{padding:20px;text-align:center;color:var(--text2);font-size:.85rem;font-family:'IBM Plex Mono',monospace;}
+
+/* ── PROFILE HERO ── */
+.profile-hero{
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:40px;padding:96px 48px 48px;
+  background:radial-gradient(ellipse 70% 60% at 80% 50%,rgba(0,229,255,.05) 0%,transparent 70%);
+  border-bottom:1px solid var(--border);
+  flex-wrap:wrap;
+}
+.profile-hero-left{flex:1;min-width:260px;}
+.ph-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);
+  border-radius:20px;padding:5px 14px;font-size:.75rem;
+  color:var(--accent);font-weight:600;letter-spacing:.4px;
+  margin-bottom:22px;animation:fadeUp .6s ease both;
+}
+.ph-pulse{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:phPulse 2s infinite;}
+@keyframes phPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.4);}}
+.ph-name{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,4vw,3.5rem);font-weight:900;line-height:1.1;
+  margin-bottom:10px;animation:fadeUp .6s .1s ease both;
+}
+.ph-name .ph-highlight{
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.ph-uni{font-size:.95rem;color:var(--text2);margin-bottom:6px;animation:fadeUp .6s .2s ease both;}
+.ph-uni strong{color:var(--accent3);}
+.ph-course{
+  font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--correct);
+  background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);
+  border-radius:6px;padding:4px 12px;display:inline-block;
+  margin-bottom:28px;animation:fadeUp .6s .3s ease both;
+}
+.ph-contacts{display:flex;flex-wrap:wrap;gap:10px;animation:fadeUp .6s .4s ease both;}
+.ph-chip{
+  display:flex;align-items:center;gap:7px;
+  background:var(--surface);border:1px solid var(--border);
+  padding:7px 14px;border-radius:8px;font-family:'IBM Plex Mono',monospace;
+  font-size:.78rem;color:var(--text2);transition:all .2s;
+}
+.ph-chip:hover{border-color:var(--accent);color:var(--accent);}
+.profile-hero-right{
+  flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:18px;
+  animation:fadeUp .6s .2s ease both;
+}
+.ph-ring{
+  width:190px;height:190px;border-radius:50%;padding:3px;
+  background:conic-gradient(var(--accent),var(--accent3),var(--accent2),var(--accent));
+  animation:spinRing 8s linear infinite;
+}
+@keyframes spinRing{
+  0%{background:conic-gradient(from 0deg,var(--accent),var(--accent3),var(--accent2),var(--accent));}
+  100%{background:conic-gradient(from 360deg,var(--accent),var(--accent3),var(--accent2),var(--accent));}
+}
+.ph-ring-inner{
+  width:100%;height:100%;border-radius:50%;background:var(--bg);
+  overflow:hidden;display:flex;align-items:center;justify-content:center;
+}
+.ph-ring-inner img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.ph-fallback{
+  font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.ph-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:16px 24px;text-align:center;width:210px;
+}
+.ph-card-name{font-weight:700;font-size:.95rem;color:var(--text);margin-bottom:4px;}
+.ph-card-role{font-size:.75rem;color:var(--text2);line-height:1.4;}
+.ph-badges{display:flex;gap:6px;justify-content:center;margin-top:10px;flex-wrap:wrap;}
+.ph-b{font-size:.63rem;padding:3px 8px;border-radius:20px;font-weight:600;}
+.ph-b-cyan{background:rgba(0,229,255,.12);color:var(--accent);}
+.ph-b-violet{background:rgba(167,139,250,.12);color:var(--accent3);}
+.ph-b-gold{background:rgba(251,191,36,.12);color:var(--gold);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── BODY OFFSET FOR FIXED NAV ── */
+body{padding-top:60px;}
+
+/* TOP BAR */
+.top-bar{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:14px 28px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(10px);
+}
+.top-bar .logo{
+  font-family:'Space Mono',monospace;
+  font-size:1rem;font-weight:700;
+  color:var(--accent);letter-spacing:.08em;
+}
+.top-bar .logo span{color:var(--accent2);}
+.top-bar .subtitle{font-size:.72rem;color:var(--text2);font-family:'IBM Plex Mono',monospace;margin-top:2px;}
+
+/* HERO */
+.hero{
+  text-align:center;padding:54px 24px 36px;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,229,255,.07) 0%, transparent 70%);
+}
+.hero h1{
+  font-size:clamp(1.9rem,4vw,3rem);font-weight:800;
+  line-height:1.15;letter-spacing:-.02em;
+  background:linear-gradient(135deg,var(--accent) 0%,var(--accent3) 60%,var(--accent2) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:10px;
+}
+.hero p{color:var(--text2);font-size:.95rem;max-width:520px;margin:0 auto 28px;font-family:'IBM Plex Mono',monospace;}
+
+/* MAIN BUTTONS */
+.main-btns{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:14px;
+  padding:0 24px 48px;
+}
+.main-exam-btn{
+  padding:16px 32px;border:none;border-radius:var(--radius);
+  font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;
+  cursor:pointer;transition:all .25s;position:relative;overflow:hidden;
+  letter-spacing:.03em;
+}
+.main-exam-btn::before{
+  content:'';position:absolute;inset:0;opacity:0;transition:opacity .25s;
+  background:rgba(255,255,255,.08);
+}
+.main-exam-btn:hover::before{opacity:1;}
+.main-exam-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.4);}
+.btn-sheets{background:linear-gradient(135deg,#1a2a3a,#0d1b2a);border:1.5px solid var(--accent);color:var(--accent);}
+.btn-sections{background:linear-gradient(135deg,#2a1a2e,#1a0d2a);border:1.5px solid var(--accent3);color:var(--accent3);}
+.btn-lectures{background:linear-gradient(135deg,#2a1a1a,#2a0d16);border:1.5px solid var(--accent2);color:var(--accent2);}
+.main-exam-btn.active{transform:translateY(-2px);}
+.btn-sheets.active{background:var(--accent);color:#000;}
+.btn-sections.active{background:var(--accent3);color:#fff;}
+.btn-lectures.active{background:var(--accent2);color:#fff;}
+
+/* SECTION TITLE */
+.section-header{
+  padding:0 28px 20px;display:flex;align-items:center;gap:14px;
+  border-bottom:1px solid var(--border);margin-bottom:28px;
+}
+.section-header h2{font-size:1.3rem;font-weight:700;}
+.section-header .badge{
+  background:var(--surface2);border:1px solid var(--border);
+  padding:4px 12px;border-radius:20px;font-size:.78rem;
+  font-family:'IBM Plex Mono',monospace;color:var(--text2);
+}
+
+/* INNER CONTROLS */
+.inner-actions{
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  padding:0 28px 20px;
+}
+.mode-toggle{display:flex;gap:6px;}
+.mode-opt{
+  padding:7px 16px;border:1px solid var(--border);border-radius:6px;
+  background:var(--surface2);color:var(--text2);font-size:.82rem;
+  cursor:pointer;transition:all .2s;font-family:'IBM Plex Mono',monospace;
+}
+.mode-opt.active,.mode-opt:hover{
+  background:var(--surface);border-color:var(--accent);color:var(--accent);
+}
+.search-container{flex:1;min-width:200px;max-width:340px;}
+.search-container input{
+  width:100%;padding:8px 14px;background:var(--surface2);
+  border:1px solid var(--border);border-radius:6px;color:var(--text);
+  font-family:'IBM Plex Mono',monospace;font-size:.82rem;outline:none;
+  transition:border-color .2s;
+}
+.search-container input:focus{border-color:var(--accent);}
+.search-container input::placeholder{color:var(--text2);}
+.print-btn{
+  padding:7px 18px;background:var(--surface2);border:1px solid var(--border);
+  border-radius:6px;color:var(--text2);font-size:.82rem;cursor:pointer;
+  transition:all .2s;font-family:'IBM Plex Mono',monospace;
+}
+.print-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* EXAM SECTION */
+.exam-section{display:none;padding:0 28px 60px;}
+.exam-section.visible{display:block;}
+
+/* CATEGORY LABEL */
+.category-label{
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+  color:var(--accent);text-transform:uppercase;letter-spacing:.12em;
+  margin:28px 0 10px;padding-bottom:6px;border-bottom:1px dashed var(--border);
+}
+
+/* QUESTION CARD */
+.question{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:20px 22px;margin-bottom:14px;
+  transition:border-color .2s;position:relative;
+}
+.question:hover{border-color:rgba(0,229,255,.2);}
+.question.answered-correct{border-left:3px solid var(--correct);}
+.question.answered-wrong{border-left:3px solid var(--wrong);}
+
+.q-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;}
+.q-num{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:6px;padding:3px 10px;font-family:'Space Mono',monospace;
+  font-size:.75rem;color:var(--accent);white-space:nowrap;flex-shrink:0;margin-top:1px;
+}
+.q-type-badge{
+  font-size:.68rem;font-family:'IBM Plex Mono',monospace;
+  padding:2px 8px;border-radius:4px;flex-shrink:0;margin-top:3px;
+}
+.badge-mcq{background:rgba(0,229,255,.12);color:var(--accent);}
+.badge-tf{background:rgba(167,139,250,.12);color:var(--accent3);}
+.badge-code{background:rgba(251,191,36,.12);color:var(--gold);}
+.badge-prog{background:rgba(255,61,107,.12);color:var(--accent2);}
+.badge-sa{background:rgba(16,185,129,.12);color:var(--correct);}
+.badge-expr{background:rgba(255,165,0,.12);color:orange;}
+
+.q-text{font-size:.95rem;line-height:1.65;flex:1;}
+.q-text code,.q-code{
+  font-family:'IBM Plex Mono',monospace;font-size:.82rem;
+  background:rgba(255,255,255,.05);border:1px solid var(--border);
+  border-radius:5px;padding:1px 6px;color:var(--gold);
+}
+
+/* CODE BLOCK */
+.code-block{
+  background:#0d1117;border:1px solid var(--border);border-radius:8px;
+  padding:14px 16px;margin:12px 0;overflow-x:auto;
+  font-family:'IBM Plex Mono',monospace;font-size:.8rem;line-height:1.7;
+  color:#c9d1d9;white-space:pre;
+}
+.code-block .kw{color:#ff7b72;}
+.code-block .str{color:#a5d6ff;}
+.code-block .num{color:#79c0ff;}
+.code-block .cmt{color:#8b949e;font-style:italic;}
+.code-block .fn{color:#d2a8ff;}
+.code-block .op{color:#ff7b72;}
+
+/* OPTIONS */
+.options{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
+.option{
+  display:flex;align-items:flex-start;gap:10px;padding:10px 14px;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;cursor:pointer;transition:all .18s;
+  font-size:.9rem;line-height:1.5;
+}
+.option:hover{border-color:var(--accent);background:rgba(0,229,255,.05);}
+.option.correct{background:rgba(16,185,129,.12);border-color:var(--correct);color:var(--correct);}
+.option.wrong{background:rgba(239,68,68,.12);border-color:var(--wrong);color:var(--wrong);}
+.option.reveal{background:rgba(16,185,129,.07);border-color:rgba(16,185,129,.4);}
+.opt-letter{
+  width:24px;height:24px;flex-shrink:0;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:5px;display:flex;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;
+  margin-top:1px;
+}
+.option.correct .opt-letter{background:var(--correct);color:#fff;border-color:var(--correct);}
+.option.wrong .opt-letter{background:var(--wrong);color:#fff;border-color:var(--wrong);}
+.option.reveal .opt-letter{background:rgba(16,185,129,.3);border-color:var(--correct);}
+
+/* ANSWER DISPLAY */
+.answer-display{
+  display:none;margin-top:12px;padding:12px 14px;
+  background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.25);
+  border-radius:8px;font-size:.88rem;line-height:1.6;
+}
+.answer-display.visible{display:block;}
+.answer-display .ans-label{
+  font-family:'IBM Plex Mono',monospace;font-size:.75rem;
+  color:var(--correct);margin-bottom:5px;font-weight:500;
+}
+
+/* TF BUTTONS */
+.tf-options{display:flex;gap:10px;margin-top:4px;}
+.tf-btn{
+  padding:8px 28px;border:1px solid var(--border);border-radius:7px;
+  background:var(--surface2);color:var(--text2);cursor:pointer;
+  font-size:.9rem;font-family:'Syne',sans-serif;font-weight:600;
+  transition:all .18s;
+}
+.tf-btn:hover{border-color:var(--accent);}
+.tf-btn.correct{background:rgba(16,185,129,.15);border-color:var(--correct);color:var(--correct);}
+.tf-btn.wrong{background:rgba(239,68,68,.15);border-color:var(--wrong);color:var(--wrong);}
+
+/* SCORE BAR */
+.score-bar{
+  position:sticky;bottom:0;left:0;right:0;
+  background:var(--surface);border-top:1px solid var(--border);
+  padding:10px 28px;display:flex;align-items:center;justify-content:space-between;
+  font-family:'IBM Plex Mono',monospace;font-size:.82rem;
+  z-index:50;
+}
+.score-nums{color:var(--text2);}
+.score-nums span{color:var(--text);font-weight:500;}
+.score-bar .reset-btn{
+  padding:6px 16px;background:var(--surface2);border:1px solid var(--border);
+  border-radius:6px;color:var(--text2);cursor:pointer;font-size:.78rem;
+  transition:all .2s;font-family:'IBM Plex Mono',monospace;
+}
+.score-bar .reset-btn:hover{border-color:var(--accent2);color:var(--accent2);}
+.score-progress{
+  width:120px;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;
+}
+.score-fill{height:100%;background:var(--correct);transition:width .4s;border-radius:3px;}
+
+/* PROFILE CARD (PRINT ONLY) */
+.profile-card{display:none;}
+
+/* SOCIAL LINKS */
+.social-links{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:12px;
+  padding:0 28px 40px;
+}
+.social-chip{
+  display:flex;align-items:center;gap:7px;
+  background:var(--surface);border:1px solid var(--border);
+  padding:8px 16px;border-radius:8px;font-family:'IBM Plex Mono',monospace;
+  font-size:.8rem;color:var(--text2);text-decoration:none;transition:all .2s;
+}
+.social-chip:hover{border-color:var(--accent);color:var(--accent);}
+.social-chip .icon{font-size:1rem;}
+
+/* EMPTY STATE */
+.empty-state{
+  text-align:center;padding:60px 20px;color:var(--text2);
+  font-family:'IBM Plex Mono',monospace;font-size:.9rem;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print{
+  :root{--bg:#fff;--surface:#fff;--surface2:#f9f9f9;--border:#ddd;--text:#111;--text2:#444;--accent:#0077aa;--accent2:#cc0033;--accent3:#6633aa;--correct:#007744;--wrong:#cc0000;--gold:#996600;}
+  body{background:#fff;color:#111;font-family:'IBM Plex Mono',monospace;font-size:8.5pt;}
+  .global-nav,.profile-hero,.top-bar,.hero,.main-btns,.inner-actions,.score-bar,.social-links,#particles-bg,#global-search-results{display:none!important;}
+  .exam-section{display:block!important;padding:0!important;}
+  .profile-card{
+    display:block!important;text-align:center;
+    border:1px solid #ccc;padding:12px;margin-bottom:12px;
+    page-break-inside:avoid;break-inside:avoid;
+  }
+  .profile-card img{width:70px;height:70px;border-radius:50%;object-fit:cover;margin-bottom:6px;}
+  .profile-card h3{font-size:11pt;font-weight:700;margin-bottom:2px;}
+  .profile-card .uni{font-size:8pt;color:#555;margin-bottom:5px;}
+  .profile-card .contacts{font-size:8pt;color:#333;}
+  .category-label{font-size:7pt;color:#555;border-bottom:1px solid #ccc;margin:8px 0 4px;padding-bottom:2px;}
+  .question{
+    border:1px solid #ccc!important;border-left:2px solid #0077aa!important;
+    background:#fff!important;padding:7px 10px!important;
+    margin-bottom:5px!important;break-inside:avoid;page-break-inside:avoid;
+  }
+  .question.answered-correct{border-left-color:#007744!important;}
+  .question.answered-wrong{border-left-color:#cc0000!important;}
+  .q-num{font-size:7pt;color:#0077aa;font-weight:700;}
+  .q-type-badge{font-size:6.5pt;}
+  .q-text{font-size:8.5pt;}
+  .option{
+    background:#f9f9f9!important;border:1px solid #ddd!important;
+    padding:3px 8px!important;margin-bottom:2px!important;
+    color:#111!important;font-size:8pt;
+  }
+  .option.reveal,.option.correct{background:#e6fff2!important;border-color:#007744!important;color:#005533!important;}
+  .answer-display{
+    display:block!important;background:#f0fff8!important;
+    border:1px solid #009966!important;padding:5px 8px!important;
+    margin-top:5px!important;font-size:8pt;
+  }
+  .code-block{
+    font-size:7.5pt!important;background:#f5f5f5!important;
+    border:1px solid #ccc!important;padding:6px 8px!important;
+    color:#111!important;
+  }
+  .tf-btn{
+    border:1px solid #ccc!important;background:#f9f9f9!important;
+    color:#333!important;padding:3px 12px!important;font-size:8pt!important;
+  }
+  .tf-btn.correct{background:#e6fff2!important;color:#005533!important;border-color:#007744!important;}
+  body::after{
+    content:"ENG / YOUSSEF SOBHY | CSC124 Structured Programming";
+    position:fixed;bottom:4px;left:0;right:0;
+    text-align:center;font-size:7pt;color:#aaa;z-index:9999;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- PARTICLES -->
+<div id="particles-bg"></div>
+
+<!-- GLOBAL SEARCH RESULTS POPUP -->
+<div id="global-search-results"></div>
+
+<!-- NAVBAR -->
+<nav class="global-nav">
+  <a href="#" class="nav-logo-text">⚡ CSC<span>124</span></a>
+  <ul class="nav-links-list">
+    <li><a href="#" onclick="event.preventDefault()">Home</a></li>
+    <li><a href="#" onclick="event.preventDefault();showSection('sheets')">Sheets</a></li>
+    <li><a href="#" onclick="event.preventDefault();showSection('sections')">Sections</a></li>
+    <li><a href="#" onclick="event.preventDefault();showSection('lectures')">Lectures</a></li>
+  </ul>
+  <div class="nav-search-wrap">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input type="text" id="global-search-input" placeholder="Search all questions…" autocomplete="off"/>
+  </div>
+</nav>
+
+<!-- PROFILE HERO -->
+<div class="profile-hero">
+  <div class="profile-hero-left">
+    <div class="ph-badge"><span class="ph-pulse"></span> CSC124 · Sphinx University · 2025/2026</div>
+    <h1 class="ph-name">Youssef<br><span class="ph-highlight">Sobhy Mohamed</span></h1>
+    <p class="ph-uni">Faculty of Computers &amp; Artificial Intelligence · <strong>Sphinx University</strong></p>
+    <p class="ph-course">CSC124 — Structured Programming</p>
+    <div class="ph-contacts">
+      <span class="ph-chip">📞 01066781530</span>
+      <span class="ph-chip">▶️ YOUSSEFSOBHY1</span>
+      <span class="ph-chip">📨 @YOU1_SSEF</span>
+    </div>
+  </div>
+  <div class="profile-hero-right">
+    <div class="ph-ring">
+      <div class="ph-ring-inner">
+        <img src="profile.jpeg" alt="Youssef Sobhy"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+        <span class="ph-fallback" style="display:none;">YS</span>
+      </div>
+    </div>
+    <div class="ph-card">
+      <div class="ph-card-name">Youssef Sobhy Mohamed</div>
+      <div class="ph-card-role">CS &amp; AI Student<br>Sphinx University</div>
+      <div class="ph-badges">
+        <span class="ph-b ph-b-cyan">C++</span>
+        <span class="ph-b ph-b-violet">Structured Prog.</span>
+        <span class="ph-b ph-b-gold">AI Faculty</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div>
+    <div class="logo">CSC<span>124</span></div>
+    <div class="subtitle">Structured Programming — Sphinx University</div>
+  </div>
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:.75rem;color:var(--text2);">Prof. Mohamed Hassan Essai</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Structured Programming<br/>Exam Preparation</h1>
+  <p>All questions from Sheets, Sections &amp; Lectures — exactly as provided.</p>
+</div>
+
+<!-- MAIN BUTTONS -->
+<div class="main-btns">
+  <button class="main-exam-btn btn-sheets" onclick="showSection('sheets')">📄 SHEETS QUESTIONS<br/><span style="font-size:.75rem;font-weight:400;font-family:'IBM Plex Mono',monospace;">أسئلة الشيتات</span></button>
+  <button class="main-exam-btn btn-sections" onclick="showSection('sections')">📚 SECTIONS QUESTIONS<br/><span style="font-size:.75rem;font-weight:400;font-family:'IBM Plex Mono',monospace;">أسئلة السكاشن</span></button>
+  <button class="main-exam-btn btn-lectures" onclick="showSection('lectures')">🎓 LECTURES QUESTIONS<br/><span style="font-size:.75rem;font-weight:400;font-family:'IBM Plex Mono',monospace;">أسئلة المحاضرات</span></button>
+</div>
+
+<!-- SOCIAL LINKS -->
+<div class="social-links">
+  <span class="social-chip"><span class="icon">📞</span> 01066781530</span>
+  <span class="social-chip"><span class="icon">▶️</span> YOUSSEFSOBHY1</span>
+  <span class="social-chip"><span class="icon">📨</span> @YOU1_SSEF</span>
+</div>
+
+<!-- ============================================================ -->
+<!-- SHEETS SECTION -->
+<!-- ============================================================ -->
+<div id="section-sheets" class="exam-section">
+
+  <!-- PROFILE CARD (print only) -->
+  <div class="profile-card">
+    <img src="profile.jpeg" alt="Youssef Sobhy" onerror="this.style.display='none'"/>
+    <h3>YOUSSEF SOBHY</h3>
+    <div class="uni">Sphinx University — Faculty of Computer Science &amp; Artificial Intelligence</div>
+    <div class="contacts">📞 01066781530 &nbsp;|&nbsp; ▶️ YOUSSEFSOBHY1 &nbsp;|&nbsp; 📨 @YOU1_SSEF</div>
+  </div>
+
+  <div class="section-header">
+    <h2 style="color:var(--accent)">📄 Sheets Questions</h2>
+    <span class="badge" id="sheets-count">Loading…</span>
+  </div>
+
+  <div class="inner-actions">
+    <div class="mode-toggle">
+      <button class="mode-opt active" onclick="setMode('sheets','study',this)">📖 Study Mode</button>
+      <button class="mode-opt" onclick="setMode('sheets','quiz',this)">⚡ Quiz Mode</button>
+      <button class="mode-opt" onclick="setMode('sheets','reveal',this)">👁 Show All Answers</button>
+    </div>
+    <div class="search-container"><input type="text" placeholder="Search questions…" oninput="filterQuestions('sheets',this.value)"/></div>
+    <button class="print-btn" onclick="window.print()">🖨 Print / PDF</button>
+  </div>
+
+  <div id="sheets-questions">
+
+    <!-- ── SHEET 1 ── -->
+    <div class="category-label">📋 Sheet 1 — Computer Basics: True / False</div>
+
+    <!-- Q1 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q1</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">The calculating device called the Pascaline could calculate sums up to eight figures long.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — The Pascaline (invented by Blaise Pascal, 1642) could calculate sums up to eight figures.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q2</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">All programs must be loaded into the CPU before they can be executed and all data must be loaded into main memory before it can be manipulated.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','False','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','False','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>False — Programs must be loaded into <em>main memory</em> (RAM), not the CPU, before execution.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q3</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">Main memory is an ordered sequence of cells and each cell has a random location in main memory.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','False','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','False','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>False — Main memory is an ordered sequence of cells and each cell has a <em>unique</em> (not random) address/location.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q4</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">The program that loads first when you turn on your computer is called the operating system.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — When the computer powers on, the BIOS/firmware loads the operating system first.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q5</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">Analog signals represent information with a sequence of 0s and 1s.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','False','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','False','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>False — <em>Digital</em> signals represent information with 0s and 1s; analog signals are continuous.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q6</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">The machine language is a sequence of 0s and 1s.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — Machine language (binary code) consists entirely of 0s and 1s that the CPU directly understands.</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q7</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">A binary code is a sequence of 0s and 1s.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — A binary code is by definition a sequence of binary digits (0s and 1s).</div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q8</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">A sequence of eight bits is called a byte.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — By definition, 8 bits = 1 byte.</div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q9</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">One GB is 2^20 MB.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','False','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','False','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>False — One GB is 2^10 MB (1024 MB), not 2^20 MB.</div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q10</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">In ASCII, A is the 65th character.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — In ASCII, the character 'A' has the decimal value 65.</div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q11</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">The number system used by a computer is base 2.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — Computers use the binary (base-2) number system internally.</div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q12</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">An assembler translates the assembly language instructions into machine language.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — An assembler converts assembly language mnemonics into machine code (binary).</div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q13</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">A compiler translates the source program into an object program.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — A compiler translates high-level source code into an object (machine-code) program.</div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q14</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">In a C++ program, statements that begin with the symbol # are called preprocessor directives.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — Lines beginning with # (like #include, #define) are preprocessor directives processed before compilation.</div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q15</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">An object program is the machine language version of a high-level language program.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — The object program is the machine-code output produced by the compiler from the source code.</div>
+    </div>
+
+    <!-- Q16 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q16</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">All logical errors, such as division by 0, are reported by the compiler.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','False','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','False','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>False — Logical errors (like dividing by zero at runtime) are NOT caught by the compiler; they are runtime or logic errors.</div>
+    </div>
+
+    <!-- Q17 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q17</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">In object-oriented design (OOD), a program is a collection of interacting objects.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — In OOD, a program is designed as a set of objects that interact with each other.</div>
+    </div>
+
+    <!-- Q18 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q18</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">An object consists of data and operations on that data.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — In OOP, an object encapsulates data (attributes) and the operations (methods) that act on that data.</div>
+    </div>
+
+    <!-- Q19 -->
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q19</span>
+        <span class="q-type-badge badge-tf">True/False</span>
+        <span class="q-text">ISO stands for International Organization for Standardization.</span>
+      </div>
+      <div class="tf-options">
+        <button class="tf-btn" onclick="answerTF(this,'True','True','sheets')">True</button>
+        <button class="tf-btn" onclick="answerTF(this,'False','True','sheets')">False</button>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>True — ISO stands for International Organization for Standardization, which standardizes C++.</div>
+    </div>
+
+    <!-- Sheet 1 Short Answers -->
+    <div class="category-label">📋 Sheet 1 — Short Answer Questions</div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q20</span>
+        <span class="q-type-badge badge-sa">Short Answer</span>
+        <span class="q-text">Which hardware component performs arithmetic and logical operations?</span>
+      </div>
+      <div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>The <strong>ALU (Arithmetic Logic Unit)</strong>, which is part of the CPU (Central Processing Unit), performs all arithmetic and logical operations.</div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q21</span>
+        <span class="q-type-badge badge-sa">Short Answer</span>
+        <span class="q-text">Which number system is used by a computer?</span>
+      </div>
+      <div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>The <strong>binary number system (base 2)</strong> — using only the digits 0 and 1.</div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q22</span>
+        <span class="q-type-badge badge-sa">Short Answer</span>
+        <span class="q-text">What is an object program?</span>
+      </div>
+      <div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>An <strong>object program</strong> is the machine-language version of a high-level language program, produced by a compiler. It contains machine code that is not yet linked.</div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q23</span>
+        <span class="q-type-badge badge-sa">Short Answer</span>
+        <span class="q-text">What is linking?</span>
+      </div>
+      <div class="answer-display visible"><div class="ans-label">✅ ANSWER</div><strong>Linking</strong> is the process by which the linker combines the object program with library programs (prewritten code) to create an executable (.exe) file.</div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q24</span>
+        <span class="q-type-badge badge-sa">Short Answer</span>
+        <span class="q-text">Which program loads the executable code from the main memory into the CPU for execution?</span>
+      </div>
+      <div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>The <strong>Loader</strong> loads the executable code from secondary storage into main memory (RAM) and prepares it for execution by the CPU.</div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q25</span>
+        <span class="q-type-badge badge-sa">Short Answer</span>
+        <span class="q-text">In a C++ program, preprocessor directives begin with which symbol?</span>
+      </div>
+      <div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>Preprocessor directives begin with the <strong>#</strong> (hash/pound) symbol. Example: <code>#include &lt;iostream&gt;</code></div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q26</span>
+        <span class="q-type-badge badge-sa">Short Answer</span>
+        <span class="q-text">In a C++ program, which program processes statements that begin with the symbol #?</span>
+      </div>
+      <div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>The <strong>Preprocessor</strong> processes all statements beginning with # before the compiler translates the code.</div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q27</span>
+        <span class="q-type-badge badge-sa">Short Answer</span>
+        <span class="q-text">What is programming?</span>
+      </div>
+      <div class="answer-display visible"><div class="ans-label">✅ ANSWER</div><strong>Programming</strong> is the process of giving a set of instructions (a recipe) to a computer to solve a problem or perform a specific task.</div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q28</span>
+        <span class="q-type-badge badge-sa">Short Answer</span>
+        <span class="q-text">What is an algorithm?</span>
+      </div>
+      <div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>An <strong>algorithm</strong> is a step-by-step, finite set of well-defined instructions for solving a problem or performing a computation.</div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q29</span>
+        <span class="q-type-badge badge-sa">Short Answer</span>
+        <span class="q-text">Describe the steps required by the problem-solving process.</span>
+      </div>
+      <div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>The problem-solving process involves: <strong>1)</strong> Analyze the problem, <strong>2)</strong> Design an algorithm, <strong>3)</strong> Implement (code) the algorithm in a programming language, <strong>4)</strong> Test and debug the program, <strong>5)</strong> Maintain the program.</div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S1·Q30</span>
+        <span class="q-type-badge badge-sa">Short Answer</span>
+        <span class="q-text">Describe the steps required in the analysis phase of programming.</span>
+      </div>
+      <div class="answer-display visible"><div class="ans-label">✅ ANSWER</div>The analysis phase includes: <strong>1)</strong> Understand the problem thoroughly, <strong>2)</strong> Identify what information is given (input), <strong>3)</strong> Identify the desired results (output), <strong>4)</strong> Identify any constraints or special conditions.</div>
+    </div>
+
+    <!-- ── SHEET 2 ── -->
+    <div class="category-label">📋 Sheet 2 — Algorithm Design Problems</div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S2·Q1</span>
+        <span class="q-type-badge badge-prog">Algorithm</span>
+        <span class="q-text">Design an algorithm to find the perimeter and area of a rectangle.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER — Algorithm</div>
+        <strong>Input:</strong> length, width<br/>
+        <strong>Steps:</strong><br/>
+        1. Get the length of the rectangle.<br/>
+        2. Get the width of the rectangle.<br/>
+        3. Calculate perimeter = 2 × (length + width)<br/>
+        4. Calculate area = length × width<br/>
+        5. Output perimeter and area.<br/>
+        <strong>C++ Key Lines:</strong><br/>
+        <code>perimeter = 2 * (length + width);</code><br/>
+        <code>area = length * width;</code>
+      </div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S2·Q2</span>
+        <span class="q-type-badge badge-prog">Algorithm</span>
+        <span class="q-text">Design an algorithm that calculates the sales tax and price of an item. The state's portion (stateSalesTax) is 4%, city's (citySalesTax) is 1.5%. If the item is a luxury item (e.g., a car &gt; $50,000), there is a 10% luxury tax (luxuryTax).</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER — Algorithm</div>
+        1. Get the original price of the item.<br/>
+        2. Calculate stateSalesTax = price × 0.04<br/>
+        3. Calculate citySalesTax = price × 0.015<br/>
+        4. If price &gt; 50000 then luxuryTax = price × 0.10, else luxuryTax = 0<br/>
+        5. totalTax = stateSalesTax + citySalesTax + luxuryTax<br/>
+        6. finalPrice = price + totalTax<br/>
+        7. Output totalTax and finalPrice.
+      </div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S2·Q3</span>
+        <span class="q-type-badge badge-prog">Algorithm</span>
+        <span class="q-text">Design an algorithm for monthly paycheck of a salesperson. Every salesperson has a base salary. Bonus: ≤5 years = $10/year; &gt;5 years = $20/year. Additional commission: sales ≥$5000 and &lt;$10000 = 3%; sales ≥$10000 = 6%.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER — Algorithm</div>
+        1. Get baseSalary, yearsWorked, totalSales.<br/>
+        2. If yearsWorked ≤ 5 then bonus = yearsWorked × 10<br/>
+        &nbsp;&nbsp; Else bonus = yearsWorked × 20<br/>
+        3. If totalSales ≥ 10000 then commission = totalSales × 0.06<br/>
+        &nbsp;&nbsp; Else if totalSales ≥ 5000 then commission = totalSales × 0.03<br/>
+        &nbsp;&nbsp; Else commission = 0<br/>
+        4. paycheck = baseSalary + bonus + commission<br/>
+        5. Output paycheck.
+      </div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S2·Q4</span>
+        <span class="q-type-badge badge-prog">Algorithm</span>
+        <span class="q-text">Design an algorithm to find the circumference and area of a circle.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER — Algorithm</div>
+        1. Get the radius of the circle.<br/>
+        2. Calculate circumference = 2 × π × radius &nbsp;(π ≈ 3.14159)<br/>
+        3. Calculate area = π × radius × radius<br/>
+        4. Output circumference and area.
+      </div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S2·Q5</span>
+        <span class="q-type-badge badge-prog">Algorithm</span>
+        <span class="q-text">There are 10 students in a class. Each student has taken five tests (each worth 100 pts). Design an algorithm to calculate the grade for each student and the class average. Grading: ≥90=A, ≥80=B, ≥70=C, ≥60=D, else F.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER — Algorithm</div>
+        1. Initialize classTotal = 0<br/>
+        2. Repeat for each of the 10 students:<br/>
+        &nbsp;&nbsp;a. Get student's name and 5 test scores.<br/>
+        &nbsp;&nbsp;b. sum = test1+test2+test3+test4+test5<br/>
+        &nbsp;&nbsp;c. average = sum / 5<br/>
+        &nbsp;&nbsp;d. Assign grade: if avg≥90 → A; elif avg≥80 → B; elif avg≥70 → C; elif avg≥60 → D; else F<br/>
+        &nbsp;&nbsp;e. Output student name, average, grade.<br/>
+        &nbsp;&nbsp;f. classTotal += average<br/>
+        3. classAverage = classTotal / 10<br/>
+        4. Output classAverage.
+      </div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S2·Q6</span>
+        <span class="q-type-badge badge-prog">Algorithm</span>
+        <span class="q-text">Design an algorithm to convert the change given in quarters, dimes, nickels, and pennies into pennies. (Quarter=25¢, Dime=10¢, Nickel=5¢, Penny=1¢)</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER — Algorithm</div>
+        1. Get the number of quarters.<br/>
+        2. Get the number of dimes.<br/>
+        3. Get the number of nickels.<br/>
+        4. Get the number of pennies.<br/>
+        5. totalPennies = (quarters×25) + (dimes×10) + (nickels×5) + (pennies×1)<br/>
+        6. Output totalPennies.
+      </div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S2·Q7</span>
+        <span class="q-type-badge badge-prog">Algorithm</span>
+        <span class="q-text">Design an algorithm to find the real roots of a quadratic equation of the form ax² + bx + c = 0, where a, b, and c are real numbers and a is nonzero.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER — Algorithm</div>
+        1. Get a, b, c.<br/>
+        2. Calculate discriminant = b² − 4ac<br/>
+        3. If discriminant &gt; 0: two real roots → x1 = (−b + √disc) / (2a), x2 = (−b − √disc) / (2a)<br/>
+        4. If discriminant = 0: one real root → x = −b / (2a)<br/>
+        5. If discriminant &lt; 0: no real roots (complex roots)<br/>
+        6. Output the result.
+      </div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S2·Q8</span>
+        <span class="q-type-badge badge-prog">Algorithm + C++ Statements</span>
+        <span class="q-text">The volume of a sphere is (4.0/3.0)πr³ and the surface area is 4.0πr². Given the radius, design an algorithm that computes the volume and surface area of the sphere. Also write the C++ statements (assume π = 3.141592).</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <strong>Algorithm:</strong><br/>
+        1. Get the radius.<br/>
+        2. Calculate volume = (4.0/3.0) × 3.141592 × radius³<br/>
+        3. Calculate surfaceArea = 4.0 × 3.141592 × radius²<br/>
+        4. Output volume and surfaceArea.<br/><br/>
+        <strong>C++ Code:</strong>
+        <pre class="code-block">double radius, volume, surfaceArea;
+const double PI = 3.141592;
+cin >> radius;
+volume = (4.0/3.0) * PI * radius * radius * radius;
+surfaceArea = 4.0 * PI * radius * radius;
+cout &lt;&lt; "Volume = " &lt;&lt; volume &lt;&lt; endl;
+cout &lt;&lt; "Surface Area = " &lt;&lt; surfaceArea &lt;&lt; endl;</pre>
+      </div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S2·Q9</span>
+        <span class="q-type-badge badge-prog">Algorithm</span>
+        <span class="q-text">Given the radius (in inches) and price of a pizza, design an algorithm to find the price of the pizza per square inch.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER — Algorithm</div>
+        1. Get the radius (in inches) and price of the pizza.<br/>
+        2. Calculate area = π × radius² &nbsp;(π ≈ 3.14159)<br/>
+        3. Calculate pricePerSqInch = price / area<br/>
+        4. Output pricePerSqInch.
+      </div>
+    </div>
+
+    <!-- ── SHEET 6 ── -->
+    <div class="category-label">📋 Sheet 6 — C++ Programming (if Statement)</div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S6·Q1</span>
+        <span class="q-type-badge badge-prog">Programming</span>
+        <span class="q-text">Write a C++ code that calculates the sales tax and price of an item. stateSalesTax = 4%, citySalesTax = 1.5%. If the item is a luxury item (car &gt; $50,000), then there is a 10% luxury tax (luxuryTax).</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER — C++ Code</div>
+        <pre class="code-block">#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    double price, stateSalesTax, citySalesTax, luxuryTax = 0, totalTax, finalPrice;
+    cout &lt;&lt; "Enter item price: ";
+    cin &gt;&gt; price;
+    stateSalesTax = price * 0.04;
+    citySalesTax  = price * 0.015;
+    if (price &gt; 50000)
+        luxuryTax = price * 0.10;
+    totalTax  = stateSalesTax + citySalesTax + luxuryTax;
+    finalPrice = price + totalTax;
+    cout &lt;&lt; "Total Tax   = $" &lt;&lt; totalTax   &lt;&lt; endl;
+    cout &lt;&lt; "Final Price = $" &lt;&lt; finalPrice &lt;&lt; endl;
+    return 0;
+}</pre>
+      </div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S6·Q2</span>
+        <span class="q-type-badge badge-prog">Programming</span>
+        <span class="q-text">Write a C++ code that calculates the monthly paycheck of a salesperson. Base salary + bonus (≤5 yrs: $10/yr; &gt;5 yrs: $20/yr) + commission (sales ≥$5000 &lt;$10000: 3%; sales ≥$10000: 6%).</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER — C++ Code</div>
+        <pre class="code-block">#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    double baseSalary, totalSales, bonus, commission = 0, paycheck;
+    int yearsWorked;
+    cout &lt;&lt; "Enter base salary: ";   cin &gt;&gt; baseSalary;
+    cout &lt;&lt; "Enter years worked: ";  cin &gt;&gt; yearsWorked;
+    cout &lt;&lt; "Enter total sales: ";   cin &gt;&gt; totalSales;
+
+    if (yearsWorked &lt;= 5)
+        bonus = yearsWorked * 10;
+    else
+        bonus = yearsWorked * 20;
+
+    if (totalSales &gt;= 10000)
+        commission = totalSales * 0.06;
+    else if (totalSales &gt;= 5000)
+        commission = totalSales * 0.03;
+
+    paycheck = baseSalary + bonus + commission;
+    cout &lt;&lt; "Monthly Paycheck = $" &lt;&lt; paycheck &lt;&lt; endl;
+    return 0;
+}</pre>
+      </div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S6·Q3</span>
+        <span class="q-type-badge badge-prog">Programming</span>
+        <span class="q-text">Write a C++ code to calculate the grade for each of 10 students (5 tests each). Grade: ≥90=A, ≥80=B, ≥70=C, ≥60=D, else F. Also compute class average.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER — C++ Code</div>
+        <pre class="code-block">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+int main() {
+    string name;
+    double t1,t2,t3,t4,t5, avg, classTotal=0, classAvg;
+    char grade;
+    for(int i=1; i&lt;=10; i++){
+        cout &lt;&lt; "Student " &lt;&lt; i &lt;&lt; " name: "; cin &gt;&gt; name;
+        cout &lt;&lt; "Enter 5 test scores: ";
+        cin &gt;&gt; t1 &gt;&gt; t2 &gt;&gt; t3 &gt;&gt; t4 &gt;&gt; t5;
+        avg = (t1+t2+t3+t4+t5)/5.0;
+        if      (avg &gt;= 90) grade='A';
+        else if (avg &gt;= 80) grade='B';
+        else if (avg &gt;= 70) grade='C';
+        else if (avg &gt;= 60) grade='D';
+        else                grade='F';
+        cout &lt;&lt; name &lt;&lt; " | Avg: " &lt;&lt; avg &lt;&lt; " | Grade: " &lt;&lt; grade &lt;&lt; endl;
+        classTotal += avg;
+    }
+    classAvg = classTotal / 10.0;
+    cout &lt;&lt; "Class Average = " &lt;&lt; classAvg &lt;&lt; endl;
+    return 0;
+}</pre>
+      </div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S6·Q4</span>
+        <span class="q-type-badge badge-prog">Programming</span>
+        <span class="q-text">Write a C++ code to find the real roots of a quadratic equation ax² + bx + c = 0, where a, b, c are real numbers and a is nonzero.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER — C++ Code</div>
+        <pre class="code-block">#include &lt;iostream&gt;
+#include &lt;cmath&gt;
+using namespace std;
+int main() {
+    double a, b, c, disc, x1, x2;
+    cout &lt;&lt; "Enter a, b, c: "; cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+    disc = b*b - 4*a*c;
+    if (disc &gt; 0) {
+        x1 = (-b + sqrt(disc)) / (2*a);
+        x2 = (-b - sqrt(disc)) / (2*a);
+        cout &lt;&lt; "Two real roots: x1=" &lt;&lt; x1 &lt;&lt; ", x2=" &lt;&lt; x2 &lt;&lt; endl;
+    } else if (disc == 0) {
+        x1 = -b / (2*a);
+        cout &lt;&lt; "One real root: x=" &lt;&lt; x1 &lt;&lt; endl;
+    } else {
+        cout &lt;&lt; "No real roots (discriminant is negative)." &lt;&lt; endl;
+    }
+    return 0;
+}</pre>
+      </div>
+    </div>
+
+    <div class="question" data-section="sheets">
+      <div class="q-header">
+        <span class="q-num">S6·Q5</span>
+        <span class="q-type-badge badge-prog">Programming</span>
+        <span class="q-text">Write a C++ code to compute the volume and surface area of a sphere. Volume = (4.0/3.0)πr³, Surface Area = 4.0πr². The code must check that radius is not negative; if it is, display "Error!".</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER — C++ Code</div>
+        <pre class="code-block">#include &lt;iostream&gt;
+#include &lt;cmath&gt;
+using namespace std;
+int main() {
+    const double PI = 3.14159265;
+    double radius, volume, surfaceArea;
+    cout &lt;&lt; "Enter radius: "; cin &gt;&gt; radius;
+    if (radius &lt; 0) {
+        cout &lt;&lt; "Error!" &lt;&lt; endl;
+    } else {
+        volume      = (4.0/3.0) * PI * pow(radius, 3);
+        surfaceArea = 4.0 * PI * pow(radius, 2);
+        cout &lt;&lt; "Volume       = " &lt;&lt; volume      &lt;&lt; endl;
+        cout &lt;&lt; "Surface Area = " &lt;&lt; surfaceArea &lt;&lt; endl;
+    }
+    return 0;
+}</pre>
+      </div>
+    </div>
+
+  </div><!-- end sheets-questions -->
+</div><!-- end section-sheets -->
+
+
+<!-- ============================================================ -->
+<!-- SECTIONS SECTION -->
+<!-- ============================================================ -->
+<div id="section-sections" class="exam-section">
+
+  <div class="profile-card">
+    <img src="profile.jpeg" alt="Youssef Sobhy" onerror="this.style.display='none'"/>
+    <h3>YOUSSEF SOBHY</h3>
+    <div class="uni">Sphinx University — Faculty of Computer Science &amp; Artificial Intelligence</div>
+    <div class="contacts">📞 01066781530 &nbsp;|&nbsp; ▶️ YOUSSEFSOBHY1 &nbsp;|&nbsp; 📨 @YOU1_SSEF</div>
+  </div>
+
+  <div class="section-header">
+    <h2 style="color:var(--accent3)">📚 Sections Questions</h2>
+    <span class="badge" id="sections-count">Loading…</span>
+  </div>
+
+  <div class="inner-actions">
+    <div class="mode-toggle">
+      <button class="mode-opt active" onclick="setMode('sections','study',this)">📖 Study Mode</button>
+      <button class="mode-opt" onclick="setMode('sections','quiz',this)">⚡ Quiz Mode</button>
+      <button class="mode-opt" onclick="setMode('sections','reveal',this)">👁 Show All Answers</button>
+    </div>
+    <div class="search-container"><input type="text" placeholder="Search questions…" oninput="filterQuestions('sections',this.value)"/></div>
+    <button class="print-btn" onclick="window.print()">🖨 Print / PDF</button>
+  </div>
+
+  <div id="sections-questions">
+
+    <!-- ── SECTION 1 ── -->
+    <div class="category-label">📌 Section 1 — Programming Basics, Output, Comments</div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec1·Q1</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What is programming? Provide a simple definition.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        Programming is simply giving a <strong>recipe (a set of instructions)</strong> to the computer to perform a specific task. It is the process of giving instructions to a computer to solve a problem or perform a task. Note: The computer is extremely fast, but it is "dumb" — it will only do exactly what you tell it to do.
+      </div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec1·Q2</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">How does the computer understand us? What is the difference between high-level language and machine code?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        We speak natural languages (Arabic/English), but computers only understand binary (0s and 1s). We need a "translator".<br/>
+        • <strong>High-Level Language:</strong> Human-readable (like C++)<br/>
+        • <strong>Machine Code:</strong> Computer-readable (010101)<br/>
+        • <strong>Compiler:</strong> The translator that converts C++ code into machine code.
+      </div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec1·Q3</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What is an IDE? Why do we use it?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <strong>IDE (Integrated Development Environment)</strong> is a special text editor that serves as a "workspace" where we write, compile (translate), and run our code. Examples: Visual Studio, Code::Blocks, Dev-C++.
+      </div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec1·Q4</span>
+        <span class="q-type-badge badge-code">Code Output</span>
+        <span class="q-text">What is the output of the following C++ code?
+        <pre class="code-block">#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    cout &lt;&lt; "Hello World!" &lt;&lt; "\n";
+    cout &lt;&lt; "I am learning C++";
+    return 0;
+}</pre></span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <pre class="code-block">Hello World!
+I am learning C++</pre>
+        The <code>\n</code> is an escape sequence that moves the cursor to the next line.
+      </div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec1·Q5</span>
+        <span class="q-type-badge badge-code">Code Output</span>
+        <span class="q-text">What is the output of the following C++ code?
+        <pre class="code-block">#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    cout &lt;&lt; "Hello World!" &lt;&lt; "\n\n";
+    cout &lt;&lt; "I am learning C++";
+    return 0;
+}</pre></span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <pre class="code-block">Hello World!
+
+I am learning C++</pre>
+        Two <code>\n\n</code> creates a blank line between the two outputs.
+      </div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec1·Q6</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What are the two types of comments in C++? Provide an example of each.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <strong>1. Single-line comment:</strong> Uses <code>//</code><br/>
+        Example: <code>// This is a single line comment</code><br/><br/>
+        <strong>2. Multi-line comment:</strong> Uses <code>/* ... */</code><br/>
+        Example:<br/>
+        <pre class="code-block">/* This is a
+   multiline comment */</pre>
+      </div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec1·Q7</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What is the difference between <code>endl</code> and <code>\n</code>?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        Both <code>\n</code> and <code>endl</code> move the cursor to the next line. However:<br/>
+        • <code>\n</code> is an escape sequence character; it is faster and most commonly used.<br/>
+        • <code>endl</code> also flushes the output buffer (forces immediate output display), which is slightly slower.<br/>
+        Recommendation: prefer <code>\n</code> for performance.
+      </div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec1·Q8</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What are the 6 steps in processing a C++ program? Name each step and its output file.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <strong>Step 1 — Editor:</strong> Source Code (.cpp) — raw code written by programmer.<br/>
+        <strong>Step 2 — Preprocessor:</strong> Expanded Source Code (.i) — processes #include etc.<br/>
+        <strong>Step 3 — Compiler:</strong> Object File (.obj/.o) — checks syntax, translates to machine code.<br/>
+        <strong>Step 4 — Linker:</strong> Executable File (.exe) — combines object code with library code.<br/>
+        <strong>Step 5 — Loader:</strong> In-Memory Image (RAM) — loads program into memory.<br/>
+        <strong>Step 6 — Execution:</strong> Output/Results (on screen).
+      </div>
+    </div>
+
+    <!-- ── SECTION 2 ── -->
+    <div class="category-label">📌 Section 2 — Flowcharts, Algorithms, Variables</div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec2·Q1</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What is a flowchart?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        A <strong>flowchart</strong> is a visual representation of the sequence of steps and decisions needed to perform a process. Each step is noted within a diagram shape, and steps are linked by connecting lines and directional arrows.
+      </div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec2·Q2</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">Name and describe the four main flowchart symbols.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <strong>1. Terminal (Oval/Stadium):</strong> Indicates Start or End of a program.<br/>
+        <strong>2. Process (Rectangle):</strong> Represents a set of operations that change value, form, or location of data.<br/>
+        <strong>3. Decision (Diamond):</strong> Shows a conditional operation (yes/no, true/false test).<br/>
+        <strong>4. Input/Output (Parallelogram):</strong> Indicates inputting data or displaying/outputting results.
+      </div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec2·Q3</span>
+        <span class="q-type-badge badge-prog">Algorithm + Code</span>
+        <span class="q-text">Design an algorithm to find the circumference and area of a circle, and write the corresponding C++ code.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <strong>Algorithm:</strong><br/>
+        1. Get the radius.<br/>
+        2. circumference = 2 × π × radius<br/>
+        3. area = π × radius × radius<br/>
+        4. Output circumference and area.<br/><br/>
+        <strong>C++ Code:</strong>
+        <pre class="code-block">#include &lt;iostream&gt;
+using namespace std;
+int main(){
+    double radius, circumference, area;
+    const double PI = 3.14159;
+    cout &lt;&lt; "Enter radius: ";
+    cin &gt;&gt; radius;
+    circumference = 2 * PI * radius;
+    area = PI * radius * radius;
+    cout &lt;&lt; "Area: "          &lt;&lt; area          &lt;&lt; endl;
+    cout &lt;&lt; "Circumference: " &lt;&lt; circumference &lt;&lt; endl;
+    return 0;
+}</pre>
+      </div>
+    </div>
+
+    <!-- ── SECTION 5 ── -->
+    <div class="category-label">📌 Section 5 — Increment/Decrement, Assignment Operators, Escape Sequences</div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec5·Q1</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What is the difference between prefix increment (++x) and postfix increment (x++)?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <strong>Prefix (++x):</strong> Increment x first, then return the new value of x.<br/>
+        <strong>Postfix (x++):</strong> Copy the current value of x, then increment x, then return the copy (old value).<br/>
+        Example: if x = 5,<br/>
+        &nbsp; <code>int y = ++x;</code> → y = 6, x = 6<br/>
+        &nbsp; <code>int y = x++;</code> → y = 5, x = 6
+      </div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec5·Q2</span>
+        <span class="q-type-badge badge-mcq">MCQ</span>
+        <span class="q-text">What is the output of the following code?
+        <pre class="code-block">int x = 5, y = 5;
+cout &lt;&lt; ++x &lt;&lt; --y &lt;&lt; endl;</pre></span>
+      </div>
+      <div class="options">
+        <div class="option" onclick="answerMCQ(this,'a','b','sections')"><span class="opt-letter">A</span>55</div>
+        <div class="option" onclick="answerMCQ(this,'b','b','sections')"><span class="opt-letter">B</span>64</div>
+        <div class="option" onclick="answerMCQ(this,'c','b','sections')"><span class="opt-letter">C</span>46</div>
+        <div class="option" onclick="answerMCQ(this,'d','b','sections')"><span class="opt-letter">D</span>45</div>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>B — 64. <code>++x</code> (prefix) increments x to 6, then outputs 6. <code>--y</code> (prefix) decrements y to 4, then outputs 4. Output: 64.</div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec5·Q3</span>
+        <span class="q-type-badge badge-mcq">MCQ</span>
+        <span class="q-text">What is the output of the following code?
+        <pre class="code-block">int x = 5, y = 5, z;
+x = ++x; y = --y;
+z = x++ + y--;
+cout &lt;&lt; z;</pre></span>
+      </div>
+      <div class="options">
+        <div class="option" onclick="answerMCQ(this,'a','a','sections')"><span class="opt-letter">A</span>10</div>
+        <div class="option" onclick="answerMCQ(this,'b','a','sections')"><span class="opt-letter">B</span>11</div>
+        <div class="option" onclick="answerMCQ(this,'c','a','sections')"><span class="opt-letter">C</span>9</div>
+        <div class="option" onclick="answerMCQ(this,'d','a','sections')"><span class="opt-letter">D</span>12</div>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>A — 10. After <code>x=++x</code>: x=6. After <code>y=--y</code>: y=4. <code>z = x++ + y--</code> = 6 + 4 = 10 (then x becomes 7, y becomes 3). Output: 10.</div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec5·Q4</span>
+        <span class="q-type-badge badge-mcq">MCQ</span>
+        <span class="q-text">What is the output of the following code?
+        <pre class="code-block">int num1 = 5, num2 = 3, num3 = 2;
+num1 = num2++;
+num2 = --num3;
+cout &lt;&lt; num1 &lt;&lt; num2 &lt;&lt; num3;</pre></span>
+      </div>
+      <div class="options">
+        <div class="option" onclick="answerMCQ(this,'a','d','sections')"><span class="opt-letter">A</span>532</div>
+        <div class="option" onclick="answerMCQ(this,'b','d','sections')"><span class="opt-letter">B</span>235</div>
+        <div class="option" onclick="answerMCQ(this,'c','d','sections')"><span class="opt-letter">C</span>312</div>
+        <div class="option" onclick="answerMCQ(this,'d','d','sections')"><span class="opt-letter">D</span>311</div>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>D — 311. <code>num1 = num2++</code>: num1 gets the value of num2 (3) first, then num2 becomes 4. <code>num2 = --num3</code>: num3 decrements to 1, then num2 gets 1. Output: num1=3, num2=1, num3=1 → "311".</div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec5·Q5</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What is the <code>const</code> keyword in C++? What are the rules for declaring a constant variable?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        The <code>const</code> keyword declares <strong>read-only entities</strong>. A const variable:<br/>
+        • <strong>Must</strong> be initialized at the time of declaration.<br/>
+        • Its value <strong>cannot be modified</strong> after initialization.<br/><br/>
+        Examples:<br/>
+        <code>const int var;</code> ❌ (no initialization — error)<br/>
+        <code>const int var; var = 5;</code> ❌ (can't assign after declaration)<br/>
+        <code>const int var = 5;</code> ✅ (correct)<br/>
+      </div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec5·Q6</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">Name the five compound assignment operators in C++ and give the syntax and equivalent expression for each.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        1. <code>a += b</code> &nbsp;→&nbsp; <code>a = a + b</code> (Addition assignment)<br/>
+        2. <code>a -= b</code> &nbsp;→&nbsp; <code>a = a - b</code> (Subtraction assignment)<br/>
+        3. <code>a *= b</code> &nbsp;→&nbsp; <code>a = a * b</code> (Multiplication assignment)<br/>
+        4. <code>a /= b</code> &nbsp;→&nbsp; <code>a = a / b</code> (Division assignment)<br/>
+        5. <code>a %= b</code> &nbsp;→&nbsp; <code>a = a % b</code> (Modulus assignment)
+      </div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec5·Q7</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What is the output of <code>x += 10; x += 20; x += 30; x += 40; x += 50;</code> if x starts at 0? What does the code output?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        Starting with <code>int total = 0;</code><br/>
+        After all operations: total = 0+10+20+30+40+50 = <strong>150</strong><br/>
+        <code>cout &lt;&lt; total;</code> outputs: <strong>150</strong>
+      </div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec5·Q8</span>
+        <span class="q-type-badge badge-sa">Escape Sequences</span>
+        <span class="q-text">Complete the table: What are the commonly used escape sequences in C++ and what does each do?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <code>\n</code> — Newline (cursor to beginning of next line)<br/>
+        <code>\t</code> — Tab (cursor to next tab stop)<br/>
+        <code>\b</code> — Backspace (cursor one space to left)<br/>
+        <code>\r</code> — Return (cursor to beginning of current line, not next)<br/>
+        <code>\\</code> — Backslash (prints a backslash character)<br/>
+        <code>\'</code> — Single quotation mark<br/>
+        <code>\"</code> — Double quotation mark
+      </div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec5·Q9</span>
+        <span class="q-type-badge badge-prog">Programming</span>
+        <span class="q-text">Write a C++ program that acts as a gym registration system. Input: First Name, Last Name, Birth Year, Current Year. Combine names into fullName, calculate Age = Current Year - Birth Year, and display a Digital ID Card.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER — C++ Code</div>
+        <pre class="code-block">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+int main() {
+    string firstName, lastName, fullName;
+    int birthYear, currentYear, age;
+    cout &lt;&lt; "--- Gym Registration System ---" &lt;&lt; endl;
+    cout &lt;&lt; "Enter your First Name: "; cin &gt;&gt; firstName;
+    cout &lt;&lt; "Enter your Last Name: ";  cin &gt;&gt; lastName;
+    cout &lt;&lt; "Enter your Birth Year: "; cin &gt;&gt; birthYear;
+    cout &lt;&lt; "Enter the Current Year: ";cin &gt;&gt; currentYear;
+    fullName = firstName + " " + lastName;
+    age = currentYear - birthYear;
+    cout &lt;&lt; "\n================================" &lt;&lt; endl;
+    cout &lt;&lt; "       OFFICIAL GYM ID          " &lt;&lt; endl;
+    cout &lt;&lt; "================================" &lt;&lt; endl;
+    cout &lt;&lt; "Member Name: " &lt;&lt; fullName &lt;&lt; endl;
+    cout &lt;&lt; "Member Age : " &lt;&lt; age &lt;&lt; " years old" &lt;&lt; endl;
+    cout &lt;&lt; "================================" &lt;&lt; endl;
+    return 0;
+}</pre>
+      </div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec5·Q10</span>
+        <span class="q-type-badge badge-prog">Programming</span>
+        <span class="q-text">Given four numbers A, B, C and D. Write a C++ program to print the result of (A*B)-(C*D). Print "Difference = " followed by the result. (A, B, C, D ∈ [-10⁵, 10⁵])</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER — C++ Code</div>
+        <pre class="code-block">#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    long long A, B, C, D;
+    cin &gt;&gt; A &gt;&gt; B &gt;&gt; C &gt;&gt; D;
+    cout &lt;&lt; "Difference = " &lt;&lt; (A * B) - (C * D);
+    return 0;
+}</pre>
+        Note: Use <code>long long</code> to avoid overflow with large values.
+      </div>
+    </div>
+
+    <div class="question" data-section="sections">
+      <div class="q-header">
+        <span class="q-num">Sec5·Q11</span>
+        <span class="q-type-badge badge-prog">Programming</span>
+        <span class="q-text">Given a number N (age in days), print the age in years, months, and days. Assume 365 days/year and 30 days/month. (0 ≤ N ≤ 10⁶)</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER — C++ Code</div>
+        <pre class="code-block">#include &lt;iostream&gt;
+using namespace std;
+int main() {
+    int N;
+    cin &gt;&gt; N;
+    int years  = N / 365;
+    int months = (N % 365) / 30;
+    int days   = (N % 365) % 30;
+    cout &lt;&lt; years  &lt;&lt; " years"  &lt;&lt; endl;
+    cout &lt;&lt; months &lt;&lt; " months" &lt;&lt; endl;
+    cout &lt;&lt; days   &lt;&lt; " days"   &lt;&lt; endl;
+    return 0;
+}</pre>
+      </div>
+    </div>
+
+  </div><!-- end sections-questions -->
+</div><!-- end section-sections -->
+
+
+<!-- ============================================================ -->
+<!-- LECTURES SECTION -->
+<!-- ============================================================ -->
+<div id="section-lectures" class="exam-section">
+
+  <div class="profile-card">
+    <img src="profile.jpeg" alt="Youssef Sobhy" onerror="this.style.display='none'"/>
+    <h3>YOUSSEF SOBHY</h3>
+    <div class="uni">Sphinx University — Faculty of Computer Science &amp; Artificial Intelligence</div>
+    <div class="contacts">📞 01066781530 &nbsp;|&nbsp; ▶️ YOUSSEFSOBHY1 &nbsp;|&nbsp; 📨 @YOU1_SSEF</div>
+  </div>
+
+  <div class="section-header">
+    <h2 style="color:var(--accent2)">🎓 Lectures Questions</h2>
+    <span class="badge" id="lectures-count">Loading…</span>
+  </div>
+
+  <div class="inner-actions">
+    <div class="mode-toggle">
+      <button class="mode-opt active" onclick="setMode('lectures','study',this)">📖 Study Mode</button>
+      <button class="mode-opt" onclick="setMode('lectures','quiz',this)">⚡ Quiz Mode</button>
+      <button class="mode-opt" onclick="setMode('lectures','reveal',this)">👁 Show All Answers</button>
+    </div>
+    <div class="search-container"><input type="text" placeholder="Search questions…" oninput="filterQuestions('lectures',this.value)"/></div>
+    <button class="print-btn" onclick="window.print()">🖨 Print / PDF</button>
+  </div>
+
+  <div id="lectures-questions">
+
+    <!-- ── LECTURE 1 ── -->
+    <div class="category-label">🎓 Lecture 1 — Overview of Programming Languages & Processing a C++ Program</div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L1·Q1</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">List five things you should remember about computer basics from Lecture 1 (from the "Let's Remember" section).</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        1. A computer is an electronic device capable of performing arithmetic and logical operations.<br/>
+        2. A computer system has two components: hardware and software.<br/>
+        3. The CPU and main memory are examples of hardware components.<br/>
+        4. All programs must be brought into main memory before they can be executed.<br/>
+        5. When the power is switched off, everything in the main memory is lost.
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L1·Q2</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What are the 6 steps in processing a C++ program? Name the tool used at each step.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <strong>Step 1:</strong> Editor — creates the source program (.cpp)<br/>
+        <strong>Step 2:</strong> Preprocessor — processes # directives<br/>
+        <strong>Step 3:</strong> Compiler — checks syntax, creates object program (.obj); syntax errors reported here<br/>
+        <strong>Step 4:</strong> Linker — combines object program with library code → executable (.exe)<br/>
+        <strong>Step 5:</strong> Loader — loads executable into main memory (RAM)<br/>
+        <strong>Step 6:</strong> Execution — CPU runs the program
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L1·Q3</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What is assembly language and how is it different from machine language?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <strong>Machine language:</strong> The most basic language — a sequence of 0s and 1s that the CPU directly understands.<br/>
+        <strong>Assembly language:</strong> Uses easy-to-remember instructions called <em>mnemonics</em> (like MOV, ADD) that represent machine language instructions.<br/>
+        An <strong>assembler</strong> translates assembly language into machine language.
+      </div>
+    </div>
+
+    <!-- ── LECTURE 3 ── -->
+    <div class="category-label">🎓 Lecture 3 — Basic Elements of C++: Data Types, Operators</div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·Q1</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What is a token in C++? List the three categories of tokens.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        A <strong>token</strong> is the smallest individual unit of a program. The three categories are:<br/>
+        1. <strong>Special symbols</strong> (e.g., +, -, *, /, ;, ==)<br/>
+        2. <strong>Word symbols / Reserved words</strong> (e.g., int, float, return, if)<br/>
+        3. <strong>Identifiers</strong> (user-defined names like variables and functions)
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·Q2</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What are the rules for valid identifiers in C++? Provide examples of legal and illegal identifiers.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <strong>Rules:</strong><br/>
+        • Must consist of letters, digits, and underscore (_)<br/>
+        • Must begin with a letter or underscore (NOT a digit)<br/>
+        • C++ is case-sensitive (NUMBER ≠ number)<br/>
+        • Cannot be a reserved word<br/><br/>
+        <strong>Legal:</strong> first, conversion, payRate, _count<br/>
+        <strong>Illegal:</strong><br/>
+        • <code>employee Salary</code> — space not allowed<br/>
+        • <code>Hello!</code> — ! not allowed<br/>
+        • <code>one+two</code> — + not allowed<br/>
+        • <code>2nd</code> — cannot begin with digit
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·Q3</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">List the three categories of C++ data types and explain the three sub-categories of Simple data types.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <strong>Three categories of C++ data types:</strong><br/>
+        1. Simple, 2. Structured, 3. Pointers<br/><br/>
+        <strong>Simple data types have 3 sub-categories:</strong><br/>
+        • <strong>Integral:</strong> integers (whole numbers without decimal) — includes char, short, int, long, bool, unsigned variants<br/>
+        • <strong>Floating-point:</strong> decimal numbers — float, double, long double<br/>
+        • <strong>Enumeration:</strong> user-defined data type
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·Q4</span>
+        <span class="q-type-badge badge-mcq">MCQ</span>
+        <span class="q-text">Which data type stores values <code>true</code> and <code>false</code>?</span>
+      </div>
+      <div class="options">
+        <div class="option" onclick="answerMCQ(this,'a','c','lectures')"><span class="opt-letter">A</span>int</div>
+        <div class="option" onclick="answerMCQ(this,'b','c','lectures')"><span class="opt-letter">B</span>char</div>
+        <div class="option" onclick="answerMCQ(this,'c','c','lectures')"><span class="opt-letter">C</span>bool</div>
+        <div class="option" onclick="answerMCQ(this,'d','c','lectures')"><span class="opt-letter">D</span>double</div>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>C — <code>bool</code>. The bool data type stores only <code>true</code> and <code>false</code> (logical values) and takes 1 byte.</div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·Q5</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What is the char data type? What values can it hold? How are char literals written?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <strong>char</strong> is the smallest integral data type; it represents a single character only.<br/>
+        It is used for letters, digits, and special symbols.<br/>
+        Char literals are enclosed in <strong>single quotation marks</strong>: 'A', 'a', '0', '*', '+', '$'<br/>
+        A blank space is written as: ' ' (space between single quotes)<br/>
+        Note: <code>'abc'</code> and <code>'!='</code> are NOT of type char (they are multi-character).
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·Q6</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What are the three floating-point data types in C++? What is the range and precision of float vs double?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <strong>Three floating-point types:</strong> float, double, long double<br/><br/>
+        <strong>float:</strong><br/>
+        • Range: −3.4E+38 to 3.4E+38<br/>
+        • Storage: 4 bytes<br/>
+        • Precision: 6–7 significant digits (single precision)<br/><br/>
+        <strong>double:</strong><br/>
+        • Range: −1.7E+308 to 1.7E+308<br/>
+        • Storage: 8 bytes<br/>
+        • Precision: 15 significant digits (double precision)
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·Q7</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">Explain the order of precedence (operator precedence) in C++ arithmetic. Give an example.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        Order of evaluation (highest to lowest priority):<br/>
+        1. <strong>( )</strong> — parentheses evaluated first<br/>
+        2. <strong>*, /, %</strong> — same level, evaluated left to right<br/>
+        3. <strong>+, −</strong> — same level, evaluated left to right<br/><br/>
+        Example: <code>3 * 7 - 6 + 2 * 5 / 4 + 6</code><br/>
+        = ((3*7) − 6) + ((2*5)/4) + 6<br/>
+        = (21 − 6) + (10/4) + 6<br/>
+        = 15 + 2 + 6 = <strong>23</strong>
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·Q8</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What is a mixed expression in C++? What rules apply when evaluating it?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        A <strong>mixed expression</strong> has operands of different data types (e.g., integers and floating-point).<br/><br/>
+        <strong>Rules:</strong><br/>
+        • If an operator has operands of the same type → evaluated according to that type.<br/>
+        • If an operator has both int and float operands → the integer is <em>implicitly converted</em> to floating-point, and the result is floating-point.<br/>
+        • The entire expression is evaluated according to precedence rules.<br/><br/>
+        Examples: <code>2 + 3.5</code> → 5.5 (float), <code>6/4</code> → 1 (int division), <code>6/4.0</code> → 1.5 (float)
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·Q9</span>
+        <span class="q-type-badge badge-expr">Expression Evaluation</span>
+        <span class="q-text">Evaluate the following C++ expressions. Identify the result and its data type:<br/>
+        a) 15 / 4<br/>
+        b) 15 % 4<br/>
+        c) 15.0 / 4<br/>
+        d) 2 + 3 * 5</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        a) <code>15 / 4</code> = <strong>3</strong> (int — integer division, truncates)<br/>
+        b) <code>15 % 4</code> = <strong>3</strong> (int — remainder: 15 = 3×4 + 3)<br/>
+        c) <code>15.0 / 4</code> = <strong>3.75</strong> (double — mixed expression)<br/>
+        d) <code>2 + 3 * 5</code> = <strong>17</strong> (int — * has higher precedence than +: 3*5=15, then 2+15=17)
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·Q10</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What is a unary operator? List three examples from C++.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        A <strong>unary operator</strong> requires only one operand and performs an action on a single value to produce a result.<br/><br/>
+        Examples:<br/>
+        1. <strong>Logical NOT (!):</strong> Reverses a boolean value. <code>!true → false</code><br/>
+        2. <strong>Increment/Decrement (++, --):</strong> Increases or decreases by 1. <code>x++, --y</code><br/>
+        3. <strong>Unary Minus (−):</strong> Negates a positive number. <code>-5</code>
+      </div>
+    </div>
+
+    <!-- ── LECTURE 5 ── -->
+    <div class="category-label">🎓 Lecture 5 — Strings in C++</div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L5·Q1</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What is a string in C++? What header file must be included to use strings?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        In C++, a <strong>string</strong> is an object that represents a <em>sequence of characters</em>.<br/>
+        You must include <code>#include &lt;string&gt;</code> to use the string type.<br/><br/>
+        Advantages over <code>char[]</code>:<br/>
+        • Automatic memory management (no buffer overflows)<br/>
+        • Dynamic sizing (grows as you add text)<br/>
+        • Built-in functions for searching, replacing, and measuring
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L5·Q2</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What is the difference between using <code>cin</code> and <code>getline()</code> for string input?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <strong>cin &gt;&gt; variable:</strong> Stops at the first whitespace (space, tab, newline). Only reads a single word.<br/><br/>
+        <strong>getline(cin, variable):</strong> Reads the whole line including spaces. Preferred for full names or sentences.<br/><br/>
+        Example: If input is "Ahmed Ali",<br/>
+        <code>cin &gt;&gt; name;</code> → stores "Ahmed" only<br/>
+        <code>getline(cin, name);</code> → stores "Ahmed Ali"
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L5·Q3</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">How do you concatenate strings in C++? How do you find the length of a string? How do you access individual characters?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <strong>Concatenation:</strong> Use the <code>+</code> operator.<br/>
+        <code>string message = greeting + ", " + name + "!";</code><br/><br/>
+        <strong>Length:</strong> Use <code>.length()</code> or <code>.size()</code><br/>
+        <code>cout &lt;&lt; name.length();</code> — for "Alice" → outputs 5<br/><br/>
+        <strong>Accessing characters:</strong> Strings act like arrays; use index.<br/>
+        <code>name[0]</code> → first character (e.g., 'A' for "Alice")
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L5·Q4</span>
+        <span class="q-type-badge badge-code">Code Output</span>
+        <span class="q-text">What is the output of the following C++ code (input: name = "Alice")?
+        <pre class="code-block">string greeting = "Hello";
+string name = "Alice";
+string message = greeting + ", " + name + "!";
+cout &lt;&lt; message &lt;&lt; endl;
+cout &lt;&lt; "Your name has " &lt;&lt; name.length() &lt;&lt; " characters." &lt;&lt; endl;
+cout &lt;&lt; "The first letter of your name is: " &lt;&lt; name[0] &lt;&lt; endl;</pre></span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <pre class="code-block">Hello, Alice!
+Your name has 5 characters.
+The first letter of your name is: A</pre>
+      </div>
+    </div>
+
+    <!-- ── LECTURE 6 – IF STATEMENT ── -->
+    <div class="category-label">🎓 Lecture 6 — Control Structures I: if Statement &amp; Relational/Logical Operators</div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L6·Q1</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What are the three forms of the if statement in C++? Describe each with its general syntax.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <strong>1. One-way if:</strong><br/>
+        <pre class="code-block">if (condition)
+    statement;</pre>
+        Executes statement only if condition is true.<br/><br/>
+        <strong>2. Two-way if-else:</strong><br/>
+        <pre class="code-block">if (condition)
+    statement1;
+else
+    statement2;</pre>
+        Executes statement1 if true, statement2 if false.<br/><br/>
+        <strong>3. Multiple-alternative if-else if:</strong><br/>
+        <pre class="code-block">if (condition1)      statement1;
+else if (condition2) statement2;
+else if (condition3) statement3;
+else                 statement4;</pre>
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L6·Q2</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">List the six relational operators in C++ with their meaning.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <code>==</code> — Equal to<br/>
+        <code>!=</code> — Not equal to<br/>
+        <code>&lt;</code> &nbsp;— Less than<br/>
+        <code>&gt;</code> &nbsp;— Greater than<br/>
+        <code>&lt;=</code> — Less than or equal to<br/>
+        <code>&gt;=</code> — Greater than or equal to<br/><br/>
+        These return a boolean value (true or false).
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L6·Q3</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">List the three logical operators in C++ and describe what each does. Provide truth table results for each.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <strong>1. ! (NOT):</strong> Reverses the boolean value. !true=false, !false=true<br/>
+        <strong>2. &amp;&amp; (AND):</strong> Returns true only if BOTH operands are true.<br/>
+        &nbsp;&nbsp;true &amp;&amp; true = true<br/>
+        &nbsp;&nbsp;true &amp;&amp; false = false<br/>
+        &nbsp;&nbsp;false &amp;&amp; true = false<br/>
+        &nbsp;&nbsp;false &amp;&amp; false = false<br/>
+        <strong>3. || (OR):</strong> Returns true if AT LEAST ONE operand is true.<br/>
+        &nbsp;&nbsp;true || false = true<br/>
+        &nbsp;&nbsp;false || false = false
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L6·Q4</span>
+        <span class="q-type-badge badge-mcq">MCQ</span>
+        <span class="q-text">What is the output of this code if score = 85?
+        <pre class="code-block">int score = 85;
+char grade;
+if (score >= 90) grade = 'A';
+else if (score >= 80) grade = 'B';
+else if (score >= 70) grade = 'C';
+else if (score >= 60) grade = 'D';
+else grade = 'F';
+cout &lt;&lt; grade;</pre></span>
+      </div>
+      <div class="options">
+        <div class="option" onclick="answerMCQ(this,'a','b','lectures')"><span class="opt-letter">A</span>A</div>
+        <div class="option" onclick="answerMCQ(this,'b','b','lectures')"><span class="opt-letter">B</span>B</div>
+        <div class="option" onclick="answerMCQ(this,'c','b','lectures')"><span class="opt-letter">C</span>C</div>
+        <div class="option" onclick="answerMCQ(this,'d','b','lectures')"><span class="opt-letter">D</span>D</div>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>B — The first failing condition is score≥90 (85&lt;90). Then score≥80 is true (85≥80), so grade='B'. Output: B.</div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L6·Q5</span>
+        <span class="q-type-badge badge-mcq">MCQ</span>
+        <span class="q-text">What is the value of <code>x</code> after executing: <code>int x = 10; if (x &gt; 5) x = x * 2;</code>?</span>
+      </div>
+      <div class="options">
+        <div class="option" onclick="answerMCQ(this,'a','c','lectures')"><span class="opt-letter">A</span>5</div>
+        <div class="option" onclick="answerMCQ(this,'b','c','lectures')"><span class="opt-letter">B</span>10</div>
+        <div class="option" onclick="answerMCQ(this,'c','c','lectures')"><span class="opt-letter">C</span>20</div>
+        <div class="option" onclick="answerMCQ(this,'d','c','lectures')"><span class="opt-letter">D</span>15</div>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>C — 20. The condition <code>x &gt; 5</code> (10 &gt; 5) is true, so <code>x = 10 * 2 = 20</code>.</div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L6·Q6</span>
+        <span class="q-type-badge badge-mcq">MCQ</span>
+        <span class="q-text">What is the output of: <code>int a=5,b=3; if(a>b &amp;&amp; b>0) cout&lt;&lt;"Yes"; else cout&lt;&lt;"No";</code></span>
+      </div>
+      <div class="options">
+        <div class="option" onclick="answerMCQ(this,'a','a','lectures')"><span class="opt-letter">A</span>Yes</div>
+        <div class="option" onclick="answerMCQ(this,'b','a','lectures')"><span class="opt-letter">B</span>No</div>
+        <div class="option" onclick="answerMCQ(this,'c','a','lectures')"><span class="opt-letter">C</span>YesNo</div>
+        <div class="option" onclick="answerMCQ(this,'d','a','lectures')"><span class="opt-letter">D</span>Compilation error</div>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>A — Yes. Both conditions are true: a&gt;b (5&gt;3 = true) AND b&gt;0 (3&gt;0 = true). So output is "Yes".</div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L6·Q7</span>
+        <span class="q-type-badge badge-code">Code Output</span>
+        <span class="q-text">What is the output of this code?
+        <pre class="code-block">int x = 5;
+if (x == 5)
+    cout &lt;&lt; "five ";
+    cout &lt;&lt; "always";</pre></span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        Output: <strong>five always</strong><br/><br/>
+        Important: Without curly braces, only the first statement (<code>cout &lt;&lt; "five "</code>) is part of the if body. The second <code>cout &lt;&lt; "always";</code> is ALWAYS executed regardless of the condition. This is a common mistake — always use { } with if statements!
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L6·Q8</span>
+        <span class="q-type-badge badge-code">Code Output</span>
+        <span class="q-text">What is the output of this nested if code (input: num = 15)?
+        <pre class="code-block">int num = 15;
+if (num &gt; 0) {
+    if (num % 2 == 0)
+        cout &lt;&lt; "Positive Even";
+    else
+        cout &lt;&lt; "Positive Odd";
+} else {
+    cout &lt;&lt; "Non-positive";
+}</pre></span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        Output: <strong>Positive Odd</strong><br/>
+        Reason: num(15) &gt; 0 → enters outer if. 15 % 2 = 1 ≠ 0 → goes to else → "Positive Odd".
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L6·Q9</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What is the "dangling else" problem in C++?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        The <strong>dangling else</strong> problem occurs when there are multiple if statements and it is unclear which if an else belongs to. In C++, an <code>else</code> always matches the <em>nearest preceding unmatched if</em>.<br/>
+        <pre class="code-block">if (x &gt; 0)
+    if (x &gt; 10)
+        cout &lt;&lt; "Big";
+else              // this else matches the inner if (x>10)
+    cout &lt;&lt; "Zero or negative";</pre>
+        Solution: Always use curly braces { } to make the code clear.
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L6·Q10</span>
+        <span class="q-type-badge badge-mcq">MCQ</span>
+        <span class="q-text">Which logical operator has the highest precedence among !, &amp;&amp;, and ||?</span>
+      </div>
+      <div class="options">
+        <div class="option" onclick="answerMCQ(this,'a','a','lectures')"><span class="opt-letter">A</span>! (NOT)</div>
+        <div class="option" onclick="answerMCQ(this,'b','a','lectures')"><span class="opt-letter">B</span>&amp;&amp; (AND)</div>
+        <div class="option" onclick="answerMCQ(this,'c','a','lectures')"><span class="opt-letter">C</span>|| (OR)</div>
+        <div class="option" onclick="answerMCQ(this,'d','a','lectures')"><span class="opt-letter">D</span>They all have equal precedence</div>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>A — ! (NOT) has the highest precedence, followed by &amp;&amp; (AND), then || (OR) has the lowest.</div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L6·Q11</span>
+        <span class="q-type-badge badge-mcq">MCQ</span>
+        <span class="q-text">What is the value of this expression: <code>(5 &gt; 3) &amp;&amp; (2 &lt; 1)</code>?</span>
+      </div>
+      <div class="options">
+        <div class="option" onclick="answerMCQ(this,'a','b','lectures')"><span class="opt-letter">A</span>true</div>
+        <div class="option" onclick="answerMCQ(this,'b','b','lectures')"><span class="opt-letter">B</span>false</div>
+        <div class="option" onclick="answerMCQ(this,'c','b','lectures')"><span class="opt-letter">C</span>1</div>
+        <div class="option" onclick="answerMCQ(this,'d','b','lectures')"><span class="opt-letter">D</span>Compile error</div>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>B — false. (5&gt;3) is true, but (2&lt;1) is false. true AND false = false.</div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L6·Q12</span>
+        <span class="q-type-badge badge-mcq">MCQ</span>
+        <span class="q-text">What is the value of this expression: <code>(4 == 4) || (10 &lt; 5)</code>?</span>
+      </div>
+      <div class="options">
+        <div class="option" onclick="answerMCQ(this,'a','a','lectures')"><span class="opt-letter">A</span>true</div>
+        <div class="option" onclick="answerMCQ(this,'b','a','lectures')"><span class="opt-letter">B</span>false</div>
+        <div class="option" onclick="answerMCQ(this,'c','a','lectures')"><span class="opt-letter">C</span>0</div>
+        <div class="option" onclick="answerMCQ(this,'d','a','lectures')"><span class="opt-letter">D</span>Undefined</div>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>A — true. (4==4) is true. (10&lt;5) is false. true OR false = true (OR only needs ONE true operand).</div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L6·Q13</span>
+        <span class="q-type-badge badge-prog">Programming</span>
+        <span class="q-text">Write a C++ if-else statement that checks if a number is positive, negative, or zero, and prints an appropriate message.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER — C++ Code</div>
+        <pre class="code-block">int num;
+cout &lt;&lt; "Enter a number: ";
+cin &gt;&gt; num;
+if (num &gt; 0)
+    cout &lt;&lt; "Positive" &lt;&lt; endl;
+else if (num &lt; 0)
+    cout &lt;&lt; "Negative" &lt;&lt; endl;
+else
+    cout &lt;&lt; "Zero" &lt;&lt; endl;</pre>
+      </div>
+    </div>
+
+    <!-- Expression Evaluation -->
+    <div class="category-label">🎓 Lecture 3 — Expression Evaluation Practice</div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·EX1</span>
+        <span class="q-type-badge badge-expr">Expression</span>
+        <span class="q-text">Evaluate: <code>int result = 10 + 3 * 2 - 8 / 4;</code> — What is the value of result?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        Following operator precedence (*, / before +, -):<br/>
+        = 10 + (3*2) - (8/4)<br/>
+        = 10 + 6 - 2<br/>
+        = <strong>14</strong>
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·EX2</span>
+        <span class="q-type-badge badge-expr">Expression</span>
+        <span class="q-text">Evaluate: <code>int result = (10 + 3) * 2 - 8 / 4;</code> — What is the value of result?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        Parentheses first:<br/>
+        = (10+3) * 2 - 8/4<br/>
+        = 13 * 2 - 2<br/>
+        = 26 - 2<br/>
+        = <strong>24</strong>
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·EX3</span>
+        <span class="q-type-badge badge-expr">Expression</span>
+        <span class="q-text">Evaluate: <code>double result = 5 / 2;</code> — What is the value? Is it 2 or 2.5?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <strong>2.0</strong> (NOT 2.5!)<br/>
+        Reason: Even though result is declared as double, both operands (5 and 2) are <em>integers</em>. Integer division is performed first: 5/2 = 2, then 2 is converted to 2.0 and stored in result.<br/>
+        To get 2.5, write: <code>5.0 / 2</code> or <code>5 / 2.0</code> or <code>(double)5 / 2</code>
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·EX4</span>
+        <span class="q-type-badge badge-expr">Expression</span>
+        <span class="q-text">Evaluate: <code>3 * 7 - 6 + 2 * 5 / 4 + 6</code> — What is the result?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        Step by step (left to right, following precedence):<br/>
+        = (3*7) − 6 + (2*5)/4 + 6<br/>
+        = 21 − 6 + 10/4 + 6<br/>
+        = 21 − 6 + 2 + 6 &nbsp;&nbsp;(integer division: 10/4=2)<br/>
+        = <strong>23</strong>
+      </div>
+    </div>
+
+    <!-- VARIABLE DECLARATIONS -->
+    <div class="category-label">🎓 Lecture 3 — Variable Declarations & C++ Program Structure</div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·Q11</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">Explain the parts of a C++ variable declaration: <code>double length;</code>. What does this statement do?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        The statement <code>double length;</code> is a <strong>variable declaration</strong>. It:<br/>
+        1. Tells the system to allocate a memory space (8 bytes for double)<br/>
+        2. Names that memory space "length"<br/>
+        3. Specifies the data type (double — can hold decimal values)<br/><br/>
+        After this, you can store values with an assignment: <code>length = 6.0;</code>
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·Q12</span>
+        <span class="q-type-badge badge-code">Code Output</span>
+        <span class="q-text">What does this complete C++ program output?
+        <pre class="code-block">double length = 6.0;
+double width  = 4.0;
+double perimeter = 2 * (length + width);
+double area = length * width;
+cout &lt;&lt; "Length = "    &lt;&lt; length    &lt;&lt; endl;
+cout &lt;&lt; "Width = "     &lt;&lt; width     &lt;&lt; endl;
+cout &lt;&lt; "Perimeter = " &lt;&lt; perimeter &lt;&lt; endl;
+cout &lt;&lt; "Area = "      &lt;&lt; area      &lt;&lt; endl;</pre></span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <pre class="code-block">Length = 6
+Width = 4
+Perimeter = 20
+Area = 24</pre>
+        perimeter = 2 × (6+4) = 2×10 = 20<br/>
+        area = 6 × 4 = 24
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·Q13</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">What is the purpose of <code>using namespace std;</code> in a C++ program?</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        <code>using namespace std;</code> allows you to use standard library names like <code>cout</code>, <code>cin</code>, <code>endl</code>, and <code>string</code> directly without the <code>std::</code> prefix.<br/><br/>
+        Without it, you would need to write:<br/>
+        <code>std::cout &lt;&lt; "Hello" &lt;&lt; std::endl;</code><br/>
+        With it, you can write:<br/>
+        <code>cout &lt;&lt; "Hello" &lt;&lt; endl;</code>
+      </div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·Q14</span>
+        <span class="q-type-badge badge-mcq">MCQ</span>
+        <span class="q-text">Which of the following is a valid C++ identifier?</span>
+      </div>
+      <div class="options">
+        <div class="option" onclick="answerMCQ(this,'a','d','lectures')"><span class="opt-letter">A</span>employee Salary</div>
+        <div class="option" onclick="answerMCQ(this,'b','d','lectures')"><span class="opt-letter">B</span>Hello!</div>
+        <div class="option" onclick="answerMCQ(this,'c','d','lectures')"><span class="opt-letter">C</span>2nd</div>
+        <div class="option" onclick="answerMCQ(this,'d','d','lectures')"><span class="opt-letter">D</span>payRate</div>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>D — payRate. It starts with a letter, contains only letters and no spaces or special symbols. The others fail: A has a space, B has !, C starts with a digit.</div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·Q15</span>
+        <span class="q-type-badge badge-mcq">MCQ</span>
+        <span class="q-text">What is the result of <code>17 % 5</code> in C++?</span>
+      </div>
+      <div class="options">
+        <div class="option" onclick="answerMCQ(this,'a','b','lectures')"><span class="opt-letter">A</span>3.4</div>
+        <div class="option" onclick="answerMCQ(this,'b','b','lectures')"><span class="opt-letter">B</span>2</div>
+        <div class="option" onclick="answerMCQ(this,'c','b','lectures')"><span class="opt-letter">C</span>3</div>
+        <div class="option" onclick="answerMCQ(this,'d','b','lectures')"><span class="opt-letter">D</span>5</div>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>B — 2. The modulus operator gives the remainder: 17 = 3×5 + 2, so 17 % 5 = 2.</div>
+    </div>
+
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·Q16</span>
+        <span class="q-type-badge badge-mcq">MCQ</span>
+        <span class="q-text">What is the data type and value of <code>7 / 2</code> in C++?</span>
+      </div>
+      <div class="options">
+        <div class="option" onclick="answerMCQ(this,'a','c','lectures')"><span class="opt-letter">A</span>double, 3.5</div>
+        <div class="option" onclick="answerMCQ(this,'b','c','lectures')"><span class="opt-letter">B</span>float, 3.5</div>
+        <div class="option" onclick="answerMCQ(this,'c','c','lectures')"><span class="opt-letter">C</span>int, 3</div>
+        <div class="option" onclick="answerMCQ(this,'d','c','lectures')"><span class="opt-letter">D</span>int, 4</div>
+      </div>
+      <div class="answer-display"><div class="ans-label">✅ ANSWER</div>C — int, 3. Both 7 and 2 are integers, so integer division is performed. 7/2 = 3 (truncates, does NOT round). To get 3.5, use <code>7.0/2</code> or <code>7/2.0</code>.</div>
+    </div>
+
+    <!-- L3 - Reserved words -->
+    <div class="question" data-section="lectures">
+      <div class="q-header">
+        <span class="q-num">L3·Q17</span>
+        <span class="q-type-badge badge-sa">Concept</span>
+        <span class="q-text">List 7 common reserved words (keywords) in C++ that cannot be used as identifiers.</span>
+      </div>
+      <div class="answer-display visible">
+        <div class="ans-label">✅ ANSWER</div>
+        Common C++ reserved words:<br/>
+        <code>int</code>, <code>float</code>, <code>double</code>, <code>char</code>, <code>const</code>, <code>void</code>, <code>return</code>, <code>if</code>, <code>else</code>, <code>while</code>, <code>for</code>, <code>bool</code>, <code>true</code>, <code>false</code>, <code>string</code>, <code>class</code>, <code>using</code>, <code>namespace</code><br/><br/>
+        These cannot be redefined as variable or function names.
+      </div>
+    </div>
+
+  </div><!-- end lectures-questions -->
+</div><!-- end section-lectures -->
+
+<!-- SCORE BAR -->
+<div class="score-bar" id="score-bar" style="display:none;">
+  <div class="score-nums">Score: <span id="score-correct">0</span> / <span id="score-total">0</span> &nbsp;|&nbsp; <span id="score-pct">0%</span></div>
+  <div class="score-progress"><div class="score-fill" id="score-fill" style="width:0%"></div></div>
+  <button class="reset-btn" onclick="resetCurrent()">↺ Reset</button>
+</div>
+
+<script>
+// ── STATE ──
+var currentSection = null;
+var scores = { sheets:{correct:0,total:0}, sections:{correct:0,total:0}, lectures:{correct:0,total:0} };
+var modes  = { sheets:'study', sections:'study', lectures:'study' };
+
+// ── SECTION TOGGLE ──
+function showSection(name){
+  ['sheets','sections','lectures'].forEach(function(s){
+    var el = document.getElementById('section-'+s);
+    if(el){ el.classList.remove('visible'); }
+    document.querySelectorAll('.main-exam-btn').forEach(function(b){ b.classList.remove('active'); });
+  });
+  var section = document.getElementById('section-'+name);
+  if(section){ section.classList.add('visible'); }
+  var btns = document.querySelectorAll('.main-exam-btn');
+  btns.forEach(function(b){
+    if((name==='sheets' && b.classList.contains('btn-sheets')) ||
+       (name==='sections' && b.classList.contains('btn-sections')) ||
+       (name==='lectures' && b.classList.contains('btn-lectures'))){
+      b.classList.add('active');
+    }
+  });
+  currentSection = name;
+  document.getElementById('score-bar').style.display='flex';
+  updateScore(name);
+  updateCounts();
+  section.scrollIntoView({behavior:'smooth'});
+}
+
+// ── COUNT QUESTIONS ──
+function updateCounts(){
+  ['sheets','sections','lectures'].forEach(function(s){
+    var container = document.getElementById(s+'-questions');
+    var el = document.getElementById(s+'-count');
+    if(container && el){
+      var qs = container.querySelectorAll('.question');
+      el.textContent = qs.length + ' Questions';
+    }
+  });
+}
+
+// ── MODE ──
+function setMode(section, mode, btn){
+  modes[section] = mode;
+  btn.closest('.mode-toggle').querySelectorAll('.mode-opt').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  var container = document.getElementById(section+'-questions');
+  var questions  = container.querySelectorAll('.question');
+  questions.forEach(function(q){
+    var answers  = q.querySelectorAll('.answer-display');
+    var options  = q.querySelectorAll('.option');
+    var tfBtns   = q.querySelectorAll('.tf-btn');
+    if(mode === 'study'){
+      answers.forEach(function(a){
+        // Only show if it was already answered OR is a non-interactive type
+        if(!a.classList.contains('was-answered')) a.classList.remove('visible');
+      });
+    } else if(mode === 'quiz'){
+      answers.forEach(function(a){ a.classList.remove('visible'); });
+      options.forEach(function(o){ o.classList.remove('correct','wrong','reveal'); });
+      tfBtns.forEach(function(b){ b.classList.remove('correct','wrong'); });
+    } else if(mode === 'reveal'){
+      answers.forEach(function(a){ a.classList.add('visible'); });
+      options.forEach(function(o){
+        // Mark only correct answers
+      });
+    }
+  });
+}
+
+// ── MCQ ANSWER ──
+function answerMCQ(clickedOption, chosen, correct, section){
+  var question = clickedOption.closest('.question');
+  if(question.dataset.answered) return;
+  question.dataset.answered = 'true';
+  var options = question.querySelectorAll('.option');
+  var letters = ['a','b','c','d'];
+  options.forEach(function(opt, i){
+    if(letters[i] === correct){
+      opt.classList.add(chosen===correct ? 'correct' : 'reveal');
+    } else if(letters[i] === chosen){
+      opt.classList.add('wrong');
+    }
+  });
+  var ansDiv = question.querySelector('.answer-display');
+  if(ansDiv){ ansDiv.classList.add('visible'); ansDiv.classList.add('was-answered'); }
+  if(chosen===correct){
+    question.classList.add('answered-correct');
+    scores[section].correct++;
+  } else {
+    question.classList.add('answered-wrong');
+  }
+  scores[section].total++;
+  updateScore(section);
+}
+
+// ── TF ANSWER ──
+function answerTF(clickedBtn, chosen, correct, section){
+  var question = clickedBtn.closest('.question');
+  if(question.dataset.answered) return;
+  question.dataset.answered = 'true';
+  var buttons = question.querySelectorAll('.tf-btn');
+  buttons.forEach(function(btn){
+    if(btn.textContent.trim() === correct){
+      btn.classList.add(chosen===correct ? 'correct' : 'reveal');
+    } else if(btn.textContent.trim() === chosen){
+      btn.classList.add('wrong');
+    }
+  });
+  var ansDiv = question.querySelector('.answer-display');
+  if(ansDiv){ ansDiv.classList.add('visible'); ansDiv.classList.add('was-answered'); }
+  if(chosen===correct){
+    question.classList.add('answered-correct');
+    scores[section].correct++;
+  } else {
+    question.classList.add('answered-wrong');
+  }
+  scores[section].total++;
+  updateScore(section);
+}
+
+// ── SCORE UPDATE ──
+function updateScore(section){
+  var s = scores[section];
+  document.getElementById('score-correct').textContent = s.correct;
+  document.getElementById('score-total').textContent   = s.total;
+  var pct = s.total > 0 ? Math.round(s.correct/s.total*100) : 0;
+  document.getElementById('score-pct').textContent  = pct+'%';
+  document.getElementById('score-fill').style.width = pct+'%';
+}
+
+// ── RESET ──
+function resetCurrent(){
+  if(!currentSection) return;
+  scores[currentSection] = {correct:0,total:0};
+  var container = document.getElementById(currentSection+'-questions');
+  container.querySelectorAll('.question').forEach(function(q){
+    delete q.dataset.answered;
+    q.classList.remove('answered-correct','answered-wrong');
+    q.querySelectorAll('.option').forEach(function(o){ o.classList.remove('correct','wrong','reveal'); });
+    q.querySelectorAll('.tf-btn').forEach(function(b){ b.classList.remove('correct','wrong'); });
+    q.querySelectorAll('.answer-display').forEach(function(a){
+      a.classList.remove('visible','was-answered');
+    });
+  });
+  updateScore(currentSection);
+}
+
+// ── SEARCH / FILTER ──
+function filterQuestions(section, query){
+  var container = document.getElementById(section+'-questions');
+  var questions  = container.querySelectorAll('.question');
+  var q = query.toLowerCase();
+  questions.forEach(function(question){
+    var text = question.textContent.toLowerCase();
+    question.style.display = text.includes(q) ? '' : 'none';
+  });
+}
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', function(){
+  updateCounts();
+});
+</script>
+</body>
+</html>
